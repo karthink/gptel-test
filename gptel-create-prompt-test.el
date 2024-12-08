@@ -236,8 +236,7 @@ details."
           (gptel-backend (alist-get 'openai gptel-test-backends))
           (gptel--system-message gptel-test-system-message)
           (text "*** This is heading 1\n\nSome details\n\n**** This is heading 2")
-          (result '((:role "system" :content "To assist: Be very terse.  Respond in under 100 words if possible.  Speak in specific, topic relevant terminology. Do NOT hedge or qualify. Speak directly and be willing to make creative guesses. Explain your reasoning. if you don’t know, say you don’t know. Never apologize.  Ask questions when unsure.")
-                   (:role "user" :content "*** This is heading 1
+          (result '((:role "user" :content "*** This is heading 1
 
 Some details
 

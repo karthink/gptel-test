@@ -1,4 +1,4 @@
-((:role "system" :content "To assist: Be very terse.  Respond in under 100 words if possible.  Speak in specific, topic relevant terminology. Do NOT hedge or qualify. Speak directly and be willing to make creative guesses. Explain your reasoning. if you don’t know, say you don’t know. Never apologize.  Ask questions when unsure.") (:role "user" :content "What are the three tallest mountains on Earth?") (:role "assistant" :content "The three tallest mountains on Earth are:
+((:role "user" :content "What are the three tallest mountains on Earth?") (:role "assistant" :content "The three tallest mountains on Earth are:
 
 1. Mount Everest (8,848.86 meters / 29,031.7 feet) - located in the Himalayas on the border between Nepal and China.
 2. K2 (8,611 meters / 28,251 feet) - located in the Karakoram range on the border between Pakistan and China.
