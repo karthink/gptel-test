@@ -30,7 +30,7 @@
 (defun gptel-org--test-compare-org (md-list)
   "Given a list of markdown-formatted strings MD-LIST, covert it to
 Org markup incrementally and display both in buffers."
-  (let ((func (gptel--stream-convert-markdown->org)))
+  (let ((func (gptel--stream-convert-markdown->org (point-marker))))
     (with-current-buffer (get-buffer-create "gptel-org-test-md-input.md")
       (erase-buffer)
       (apply #'insert md-list)
@@ -59,7 +59,7 @@ Org markup incrementally and display both in buffers."
        ,(intern (concat "gptel-org--test-stream-conversion-"
                  (substring (sha1 (prin1-to-string (current-time))) 0 10)))
        ()
-       (let ((func (gptel--stream-convert-markdown->org)))
+       (let ((func (gptel--stream-convert-markdown->org (point-marker))))
         (prog1
             (should
              (string= (apply #'concat (mapcar func ,md-list))
