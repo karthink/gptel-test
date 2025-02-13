@@ -42,6 +42,7 @@
                  (gptel-response-prefix-alist
                   '((markdown-mode . "") (org-mode . "*Response*:")
                     (text-mode . "### ") (fundamental-mode . "*Response*:")))
+                 (gptel-response-separator "\n\n")
                  (gptel-model (or ,model (car (gptel-backend-models gptel-backend)))))
             ,(macroexp-progn body))
         (set-buffer-modified-p nil)))))
