@@ -36,6 +36,12 @@
       (gptel--restore-state)
       (prog1
           (let* ((gptel-backend (alist-get ',backend-sym gptel-test-backends))
+                 (gptel-prompt-prefix-alist
+                  '((markdown-mode . "#### ") (org-mode . "*Prompt*: ")
+                    (text-mode . "### ") (fundamental-mode . "*Prompt*: ")))
+                 (gptel-response-prefix-alist
+                  '((markdown-mode . "") (org-mode . "*Response*:")
+                    (text-mode . "### ") (fundamental-mode . "*Response*:")))
                  (gptel-model (or ,model (car (gptel-backend-models gptel-backend)))))
             ,(macroexp-progn body))
         (set-buffer-modified-p nil)))))
