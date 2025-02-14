@@ -5,22 +5,23 @@
 :GPTEL_BOUNDS: ((tool (752 842 \"mXJojZBa789q7ECEVMMFMmjX\") (1002 1091 \"ZJSK6DLEDXwEWvYl6CaRirFy\")) (response (588 653) (859 899) (1108 1153) (1223 1299)))
 :END:
 *Prompt*: Yo my dawg, what up?")
- (:role "assistant" :content "I'm here to assist with your inquiries. How can I help you today?")
+ (:role "assistant" :content
+        "I'm here to assist with your inquiries. How can I help you today?")
  (:role "user" :content "Is mapcar a symbol?")
+ (:role "assistant" :tool_calls
+        [(:type "function" :id "call_mXJojZBa789q7ECEVMMFMmjX" :function
+                (:name "symbol_exists" :arguments "{\"symbol\":\"mapcar\"}"))])
  (:role "tool" :tool_call_id "call_mXJojZBa789q7ECEVMMFMmjX" :content "mapcar
 
 *Fake Heading Needing Unescape")
- (:role "assistant" :tool_calls
-        [(:type "function" :id "call_mXJojZBa789q7ECEVMMFMmjX" :function
-                (:name "symbol_exists" :arguments "{\"symbol\": \"mapcar\"}"))])
  (:role "assistant" :content "Yes, =mapcar= is a symbol in Emacs Lisp.")
  (:role "user" :content "Is cat-dawg a symbol?")
+ (:role "assistant" :tool_calls
+        [(:type "function" :id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :function
+                (:name "symbol_exists" :arguments "{\"symbol\":\"cat-dawg\"}"))])
  (:role "tool" :tool_call_id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :content "nil
 
 *Fake Heading Needing Unescape")
- (:role "assistant" :tool_calls
-        [(:type "function" :id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :function
-                (:name "symbol_exists" :arguments "{\"symbol\": \"cat-dawg\"}"))])
  (:role "assistant" :content "No, =cat-dawg= is not a symbol in Emacs Lisp.")
  (:role "user" :content "That's all I guess.  Try not to kill us all.")
  (:role "assistant" :content
