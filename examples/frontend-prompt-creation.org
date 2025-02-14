@@ -1,0 +1,35 @@
+:PROPERTIES:
+:GPTEL_MODEL: gpt-4o-mini
+:GPTEL_BACKEND: ChatGPT
+:GPTEL_SYSTEM: To assist: Be very terse.  Respond in under 100 words if possible.  Speak in specific, topic relevant terminology. Do NOT hedge or qualify. Speak directly and be willing to make creative guesses. Explain your reasoning. if you don’t know, say you don’t know. Never apologize.  Ask questions when unsure.
+:GPTEL_BOUNDS: ((tool (752 842 "mXJojZBa789q7ECEVMMFMmjX") (1002 1091 "ZJSK6DLEDXwEWvYl6CaRirFy")) (response (588 653) (859 899) (1108 1153) (1223 1299)))
+:END:
+*Prompt*: Yo my dawg, what up?
+
+*Response*: I'm here to assist with your inquiries. How can I help you today?
+
+*Prompt*: Is mapcar a symbol?
+
+*Response*: 
+(:name "symbol_exists" :args (:symbol "mapcar"))
+
+mapcar
+
+*Fake Heading Needing Unescape
+Yes, =mapcar= is a symbol in Emacs Lisp.
+
+*Prompt*: Is cat-dawg a symbol?
+
+*Response*: 
+(:name "symbol_exists" :args (:symbol "cat-dawg"))
+
+nil
+
+*Fake Heading Needing Unescape
+No, =cat-dawg= is not a symbol in Emacs Lisp.
+
+*Prompt*: That's all I guess.  Try not to kill us all.
+
+*Response*: Understood. If you have more questions or need assistance, feel free to ask.
+
+*Prompt*: 

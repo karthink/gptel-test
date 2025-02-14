@@ -40,8 +40,8 @@
                   '((markdown-mode . "#### ") (org-mode . "*Prompt*: ")
                     (text-mode . "### ") (fundamental-mode . "*Prompt*: ")))
                  (gptel-response-prefix-alist
-                  '((markdown-mode . "") (org-mode . "*Response*:")
-                    (text-mode . "### ") (fundamental-mode . "*Response*:")))
+                  '((markdown-mode . "") (org-mode . "*Response*: ")
+                    (text-mode . "### ") (fundamental-mode . "*Response*: ")))
                  (gptel-response-separator "\n\n")
                  (gptel-model (or ,model (car (gptel-backend-models gptel-backend)))))
             ,(macroexp-progn body))
@@ -335,4 +335,13 @@ Some details
     "openai-new-bounds-org" "examples/openai-new-bounds-org.eld"
   (with-gptel-chat-file
    "examples/new-bounds-prompt-creation.org" openai nil
+   (gptel--create-prompt (point-max))))
+
+;;; Frontend integration tests
+
+;;;; OpenAI
+(gptel-test-prompt-creation
+    "openai-frontend-org" "examples/openai-frontend-org.eld"
+  (with-gptel-chat-file
+   "examples/frontend-prompt-creation.org" openai nil
    (gptel--create-prompt (point-max))))
