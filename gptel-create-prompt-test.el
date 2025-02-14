@@ -325,3 +325,14 @@ Some details
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
 
+;;; New Bounds Testing
+;; TODO(persistence) all of the old bounds can be updated by round-tripping the test
+;; files through save.  Whenever the new style becomes preferred, let's invert
+;; this special cast test.
+
+;;;; OpenAI
+(gptel-test-prompt-creation
+    "openai-new-bounds-org" "examples/openai-new-bounds-org.eld"
+  (with-gptel-chat-file
+   "examples/new-bounds-prompt-creation.org" openai nil
+   (gptel--create-prompt (point-max))))
