@@ -2,7 +2,7 @@
 :GPTEL_MODEL: gpt-4o-mini
 :GPTEL_BACKEND: ChatGPT
 :GPTEL_SYSTEM: To assist: Be very terse.  Respond in under 100 words if possible.  Speak in specific, topic relevant terminology. Do NOT hedge or qualify. Speak directly and be willing to make creative guesses. Explain your reasoning. if you don’t know, say you don’t know. Never apologize.  Ask questions when unsure.
-:GPTEL_BOUNDS: ((tool (752 842 \"mXJojZBa789q7ECEVMMFMmjX\") (1002 1091 \"ZJSK6DLEDXwEWvYl6CaRirFy\")) (response (588 653) (859 899) (1108 1153) (1223 1299)))
+:GPTEL_BOUNDS: ((tool (752 842 \"mXJojZBa789q7ECEVMMFMmjX\") (1002 1096 \"ZJSK6DLEDXwEWvYl6CaRirFy\")) (response (588 653) (859 899) (1113 1158) (1228 1304)))
 :END:
 *Prompt*: Yo my dawg, what up?")
  (:role "assistant" :content
@@ -19,7 +19,7 @@
  (:role "assistant" :tool_calls
         [(:type "function" :id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :function
                 (:name "symbol_exists" :arguments "{\"symbol\":\"cat-dawg\"}"))])
- (:role "tool" :tool_call_id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :content "nil
+ (:role "tool" :tool_call_id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :content "cat-dawg
 
 *Fake Heading Needing Unescape")
  (:role "assistant" :content "No, =cat-dawg= is not a symbol in Emacs Lisp.")
