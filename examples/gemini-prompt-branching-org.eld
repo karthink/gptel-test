@@ -30,4 +30,4 @@ What is Holder's inequality?")]) (:role "model" :parts (:text "Holder's inequali
 \\int |f(x) g(x)| \\, dx \\leq \\|f\\|_p \\|g\\|_q
 \\]
 
-where \\( \\|f\\|_p = \\left( \\int |f(x)|^p \\, dx \\right)^{1/p} \\) and \\( \\|g\\|_q = \\left( \\int |g(x)|^q \\, dx \\right)^{1/q} \\). It generalizes the Cauchy-Schwarz inequality and is essential in analysis for handling integrals, series, and spaces \\( L^p \\).")) (:role "user" :parts [(:text "*Prompt*:")]))
+where \\( \\|f\\|_p = \\left( \\int |f(x)|^p \\, dx \\right)^{1/p} \\) and \\( \\|g\\|_q = \\left( \\int |g(x)|^q \\, dx \\right)^{1/q} \\). It generalizes the Cauchy-Schwarz inequality and is essential in analysis for handling integrals, series, and spaces \\( L^p \\).")))

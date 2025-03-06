@@ -40,8 +40,8 @@
                   '((markdown-mode . "#### ") (org-mode . "*Prompt*: ")
                     (text-mode . "### ") (fundamental-mode . "*Prompt*: ")))
                  (gptel-response-prefix-alist
-                  '((markdown-mode . "") (org-mode . "*Response*: ")
-                    (text-mode . "### ") (fundamental-mode . "*Response*: ")))
+                  '((markdown-mode . "") (org-mode . "*Response*:\n")
+                    (text-mode . "### ") (fundamental-mode . "*Response*:\n")))
                  (gptel-response-separator "\n\n")
                  (gptel-model (or ,model (car (gptel-backend-models gptel-backend)))))
             ,(macroexp-progn body))
