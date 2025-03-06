@@ -325,23 +325,27 @@ Some details
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
 
-;;; New Bounds Testing
+;;; Bounds v2 Testing
+
+;; Tests for the new bounds format: ((response (N1 N2) ...) (tool (N3 N4) ...))
 ;; TODO(persistence) all of the old bounds can be updated by round-tripping the test
 ;; files through save.  Whenever the new style becomes preferred, let's invert
 ;; this special cast test.
 
 ;;;; OpenAI
 (gptel-test-prompt-creation
-    "openai-new-bounds-org" "examples/openai-new-bounds-org.eld"
+    "openai-bounds-v2-org" "examples/openai-prompt-bounds-v2-org.eld"
   (with-gptel-chat-file
-   "examples/new-bounds-prompt-creation.org" openai nil
-   (gptel--create-prompt (point-max))))
+   "examples/prompt-creation-bounds-v2.org" openai nil
+   (let ((gptel-org-branching-context nil))
+     (gptel--create-prompt (point-max)))))
 
-;;; Frontend integration tests
+;;; Tool block parsing testing
 
 ;;;; OpenAI
 (gptel-test-prompt-creation
-    "openai-frontend-org" "examples/openai-frontend-org.eld"
+    "openai-tool-block-org" "examples/openai-prompt-tool-block-org.eld"
   (with-gptel-chat-file
-   "examples/frontend-prompt-creation.org" openai nil
-   (gptel--create-prompt (point-max))))
+   "examples/prompt-creation-tool-block.org" openai nil
+   (let ((gptel-org-branching-context nil))
+     (gptel--create-prompt (point-max)))))
