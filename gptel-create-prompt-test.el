@@ -157,6 +157,20 @@ preselected for now, see below.)"
 ;;                               (expand-file-name "examples/ollama-prompt-branching-org.eld")
 ;;                              :backend 'ollama
 ;;                              :branching-context t)
+
+;; (gptel-test-write-prompt-data (expand-file-name "examples/prompt-creation-tool-block.org")
+;;   (expand-file-name "examples/gemini-prompt-tool-block-org.eld")
+;;   :backend 'gemini)
+
+;; (gptel-test-write-prompt-data (expand-file-name "examples/prompt-creation-tool-block.org")
+;;   (expand-file-name "examples/anthropic-prompt-tool-block-org.eld")
+;;   :backend 'anthropic)
+
+;; (gptel-test-write-prompt-data (expand-file-name "examples/prompt-creation-tool-block.org")
+;;   (expand-file-name "examples/ollama-prompt-tool-block-org.eld")
+;;   :backend 'ollama)
+
+
 ;;; Markdown
 ;;;; OpenAI
 (gptel-test-prompt-creation
@@ -347,5 +361,29 @@ Some details
     "openai-tool-block-org" "examples/openai-prompt-tool-block-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-tool-block.org" openai nil
+   (let ((gptel-org-branching-context nil))
+     (gptel--create-prompt (point-max)))))
+
+;;;; Gemini
+(gptel-test-prompt-creation
+    "gemini-tool-block-org" "examples/gemini-prompt-tool-block-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-tool-block.org" gemini nil
+   (let ((gptel-org-branching-context nil))
+     (gptel--create-prompt (point-max)))))
+
+;;;; Anthropic
+(gptel-test-prompt-creation
+    "anthropic-tool-block-org" "examples/anthropic-prompt-tool-block-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-tool-block.org" anthropic nil
+   (let ((gptel-org-branching-context nil))
+     (gptel--create-prompt (point-max)))))
+
+;;;; Ollama
+(gptel-test-prompt-creation
+    "ollama-tool-block-org" "examples/ollama-prompt-tool-block-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-tool-block.org" ollama nil
    (let ((gptel-org-branching-context nil))
      (gptel--create-prompt (point-max)))))
