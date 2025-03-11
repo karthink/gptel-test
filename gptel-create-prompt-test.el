@@ -29,6 +29,7 @@
          (buf (delay-mode-hooks (find-file-noselect ,filename)))
          (gptel--num-messages-to-send nil)
          (gptel-context--alist nil)
+         (gptel-cache nil)
          (gptel--system-message gptel-test-system-message)
          (inhibit-message t))
     (with-current-buffer buf
@@ -209,7 +210,8 @@ preselected for now, see below.)"
     "openai-branching-org" "examples/openai-prompt-branching-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" openai nil
-   (let ((gptel-org-branching-context t))
+   (let ((gptel-org-branching-context t)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Anthropic
@@ -217,7 +219,8 @@ preselected for now, see below.)"
     "anthropic-branching-org" "examples/anthropic-prompt-branching-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" anthropic nil
-   (let ((gptel-org-branching-context t))
+   (let ((gptel-org-branching-context t)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Gemini
@@ -225,7 +228,8 @@ preselected for now, see below.)"
     "gemini-branching-org" "examples/gemini-prompt-branching-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" gemini nil
-   (let ((gptel-org-branching-context t))
+   (let ((gptel-org-branching-context t)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Ollama
@@ -233,7 +237,8 @@ preselected for now, see below.)"
     "ollama-branching-org" "examples/ollama-prompt-branching-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" ollama nil
-   (let ((gptel-org-branching-context t))
+   (let ((gptel-org-branching-context t)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Kagi
@@ -256,6 +261,7 @@ details."
           (gptel-context--alist nil)
           (gptel-backend (alist-get 'openai gptel-test-backends))
           (gptel--system-message gptel-test-system-message)
+          (gptel-org-ignore-elements nil)
           (text "*** This is heading 1\n\nSome details\n\n**** This is heading 2")
           (result '((:role "user" :content "*** This is heading 1
 
@@ -277,28 +283,32 @@ Some details
 (gptel-test-prompt-creation "openai-org" "examples/openai-prompt-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" openai nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Anthropic
 (gptel-test-prompt-creation "anthropic-org" "examples/anthropic-prompt-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" anthropic nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Gemini
 (gptel-test-prompt-creation "gemini-org" "examples/gemini-prompt-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" gemini nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Ollama
 (gptel-test-prompt-creation "ollama-org" "examples/ollama-prompt-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" ollama nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;; Org-mode with region
@@ -307,7 +317,8 @@ Some details
 (gptel-test-prompt-creation "openai-region-org" "examples/openai-prompt-region-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" openai nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (goto-char 1046) (push-mark)
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
@@ -316,7 +327,8 @@ Some details
 (gptel-test-prompt-creation "anthropic-region-org" "examples/anthropic-prompt-region-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" anthropic nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (goto-char 1046) (push-mark)
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
@@ -325,7 +337,8 @@ Some details
 (gptel-test-prompt-creation "gemini-region-org" "examples/gemini-prompt-region-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" gemini nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (goto-char 1046) (push-mark)
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
@@ -334,11 +347,14 @@ Some details
 (gptel-test-prompt-creation "ollama-region-org" "examples/ollama-prompt-region-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" ollama nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (goto-char 1046) (push-mark)
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
 
+;;; TODO(org) Org-mode with gptel-org-ignore-elements
+;;; TODO(cache) With gptel-cache
 ;;; Bounds v2 Testing
 
 ;; Tests for the new bounds format: ((response (N1 N2) ...) (tool (N3 N4) ...))
@@ -351,7 +367,8 @@ Some details
     "openai-bounds-v2-org" "examples/openai-prompt-bounds-v2-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-bounds-v2.org" openai nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;; Tool block parsing testing
@@ -361,7 +378,8 @@ Some details
     "openai-tool-block-org" "examples/openai-prompt-tool-block-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-tool-block.org" openai nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Gemini
@@ -369,7 +387,8 @@ Some details
     "gemini-tool-block-org" "examples/gemini-prompt-tool-block-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-tool-block.org" gemini nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Anthropic
@@ -377,7 +396,8 @@ Some details
     "anthropic-tool-block-org" "examples/anthropic-prompt-tool-block-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-tool-block.org" anthropic nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
 
 ;;;; Ollama
@@ -385,5 +405,6 @@ Some details
     "ollama-tool-block-org" "examples/ollama-prompt-tool-block-org.eld"
   (with-gptel-chat-file
    "examples/prompt-creation-tool-block.org" ollama nil
-   (let ((gptel-org-branching-context nil))
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil))
      (gptel--create-prompt (point-max)))))
