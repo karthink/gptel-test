@@ -366,6 +366,31 @@ Some details
      (goto-char 2383) (activate-mark)
      (gptel--create-prompt))))
 
+;;; Org-mode with region, set 2
+
+;; Only testing OpenAI because the logic being tested is upstream of backend-stuff.
+
+;;;; OpenAI
+(gptel-test-prompt-creation "openai-region-2-org" "examples/openai-prompt-region-2-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-branching.org" openai nil
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil)
+         (gptel-prompt-filter-hook nil))
+     (goto-char 3013) (push-mark)
+     (goto-char 3662) (activate-mark)
+     (gptel--create-prompt))))
+
+(gptel-test-prompt-creation "openai-region-branching-org" "examples/openai-prompt-region-branching-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-branching.org" openai nil
+   (let ((gptel-org-branching-context t)
+         (gptel-org-ignore-elements nil)
+         (gptel-prompt-filter-hook nil))
+     (goto-char 1610) (push-mark)
+     (goto-char 3716) (activate-mark)
+     (gptel--create-prompt))))
+
 ;;; Org-mode with gptel-org-ignore-elements
 ;;;; OpenAI
 (gptel-test-prompt-creation "openai-org-noprops" "examples/openai-prompt-noprops-org.eld"
