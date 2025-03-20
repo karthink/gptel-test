@@ -180,6 +180,14 @@ preselected for now, see below.)"
    "examples/prompt-creation.md" openai nil
    (gptel--create-prompt 1792)))
 
+;; Test with the cursor before point-max (#723):
+(gptel-test-prompt-creation
+    "openai-md-before-max" "examples/openai-prompt-md-before-max.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation.md" openai nil
+   (goto-char 1492)
+   (gptel--create-prompt)))
+
 ;;;; Anthropic
 (gptel-test-prompt-creation
     "anthropic-md" "examples/anthropic-prompt-md.eld"
@@ -292,6 +300,17 @@ Some details
          (gptel-org-ignore-elements nil)
          (gptel-prompt-filter-hook nil))
      (gptel--create-prompt (point-max)))))
+
+;; Test with the cursor before point-max (#723):
+(gptel-test-prompt-creation "openai-org-before-max" "examples/openai-prompt-org-before-max.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-branching.org" openai nil
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil)
+         (gptel-prompt-filter-hook nil))
+     (goto-char 4097)
+     (gptel--create-prompt))))
+
 
 ;;;; Anthropic
 (gptel-test-prompt-creation "anthropic-org" "examples/anthropic-prompt-org.eld"
