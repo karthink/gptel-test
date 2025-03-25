@@ -275,21 +275,51 @@ details."
           (gptel--system-message gptel-test-system-message)
           (gptel-org-ignore-elements nil)
           (gptel-prompt-filter-hook nil)
-          (text "*** This is heading 1\n\nSome details\n\n**** This is heading 2")
-          (result '((:role "user" :content "*** This is heading 1
+          (inhibit-message t)
+          (org-inhibit-startup t))
+      (pcase-dolist (`(,text ,result)
+                     ;; Case 1: Heading at (point-min) should be excluded
+                     '(("*** This is heading 1
+
+Irrelevant text
+
+*** This is heading 2
 
 Some details
 
-**** This is heading 2")))
-          (inhibit-message t)
-          (org-inhibit-startup t))
-      (should (equal
-               (with-temp-buffer
-                 (delay-mode-hooks
-                   (insert text)
-                   (org-mode)
-                   (gptel--create-prompt (point-max))))
-               result))))
+**** This is heading 2.1"
+                        ((:role "user" :content "*** This is heading 2
+
+Some details
+
+**** This is heading 2.1")))
+                       ;; Case 2: Heading at (point-min) should be included
+                       ("*** This is heading 1
+
+Relevant text"
+                        ((:role "user" :content "*** This is heading 1
+
+Relevant text")))
+                       ;; Case 3: Non heading text at (point-min) should be included
+                       ("Some text
+*** This is heading 1
+
+Irrelevant text
+
+*** This is heading 2
+
+Some details"
+                        ((:role "user" :content "Some text
+*** This is heading 2
+
+Some details")))))
+        (should (equal
+                 (with-temp-buffer
+                   (delay-mode-hooks
+                     (insert text)
+                     (org-mode)
+                     (gptel--create-prompt (point-max))))
+                 result)))))
 
 ;;; Org-mode without branching
 ;;;; OpenAI
