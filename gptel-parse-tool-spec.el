@@ -34,7 +34,7 @@
     :description "Fetch and read the contents of a URL"
     :args (list '(:name "url"
                   :description "The URL to read"
-                  :type "string"))
+                  :type string))
     :category "web")
    (gptel--make-tool
     :function #'identity
@@ -64,21 +64,21 @@ South and West (resp) are negative."
     :args
     (list '(:name "key_colors"
             :description "Key colors in the image.  Limit to less than four."
-            :type "array"
-            :items (:type "object"
-                    :properties (:r (:type "number" :description "red value [0.0, 1.0]")
-                                 :g (:type "number" :description "green value [0.0, 1.0]")
-                                 :b (:type "number" :description "blue value [0.0, 1.0]")
-                                 :name (:type "string" :description: "Human-readable color name in snake_case, e.g. \"olive_green\" or \"turquoise\""))
+            :type array
+            :items (:type object
+                    :properties (:r (:type number :description "red value [0.0, 1.0]")
+                                 :g (:type number :description "green value [0.0, 1.0]")
+                                 :b (:type number :description "blue value [0.0, 1.0]")
+                                 :name (:type string :description: "Human-readable color name in snake_case, e.g. \"olive_green\" or \"turquoise\""))
                     :required ["r" "g" "b" "name"]))
 
           '(:name "description"
             :description "Image description.  One to two sentences max."
-            :type "string")
+            :type string)
 
           '(:name "estimated_year"
             :description "Estimated year that the images was taken, if is it a photo. Only set this if the image appears to be non-fictional. Rough estimates are okay!"
-            :type "integer"
+            :type integer
             :optional t)))
    (gptel--make-tool
     :function #'identity
@@ -112,14 +112,14 @@ South and West (resp) are negative."
                   (:location
                    (:description
                     "The latitude and longitude, in degrees.\nSouth and West (resp) are negative."
-                    :type object
+                    :type "object"
                     :properties
-                    (:lat (:type number :description "Latitude, [-90.0, 90.0]")
-                     :lon (:type number :description "Longitude, [-180.0, 180.0]"))
+                    (:lat (:type "number" :description "Latitude, [-90.0, 90.0]")
+                     :lon (:type "number" :description "Longitude, [-180.0, 180.0]"))
                     :required ["lat" "lon"])
                    :unit
                    (:description "The unit of temperature, either 'celsius' or 'fahrenheit'"
-                    :type string
+                    :type "string"
                     :enum ["celsius" "farenheit"]))
                   :required ["location"] :additionalProperties :json-false)))
    (:type "function" :function
@@ -151,15 +151,15 @@ South and West (resp) are negative."
      :parameters (:type "object" :properties
                   (:name
                    (:description "Database name to create"
-                    :type string
+                    :type "string"
                     :minLength 1)
                    :switch
                    (:description "Whether to switch to the new database after creation"
-                    :allOf [(:type string) (:type string :enum ["true" "false"])]
+                    :allOf [(:type "string") (:type "string" :enum ["true" "false"])]
                     :default "false")
                    :validateName
                    (:description "Whether to validate database name"
-                    :allOf [(:type string) (:type string :enum ["true" "false"])]
+                    :allOf [(:type "string") (:type "string" :enum ["true" "false"])]
                     :default "true"))
                   :required ["name" "switch" "validateName"]
                   :additionalProperties :json-false)))])
@@ -175,13 +175,13 @@ South and West (resp) are negative."
      (:location
       (:description
        "The latitude and longitude, in degrees.\nSouth and West (resp) are negative."
-       :type object :properties
-       (:lat (:type number :description "Latitude, [-90.0, 90.0]") :lon
-        (:type number :description "Longitude, [-180.0, 180.0]"))
+       :type "object" :properties
+       (:lat (:type "number" :description "Latitude, [-90.0, 90.0]") :lon
+        (:type "number" :description "Longitude, [-180.0, 180.0]"))
        :required ["lat" "lon"])
       :unit
       (:description "The unit of temperature, either 'celsius' or 'fahrenheit'"
-       :type string :enum ["celsius" "farenheit"]))
+       :type "string" :enum ["celsius" "farenheit"]))
      :required ["location"]))
    (:name "record_summary" :description
     "Record summary of an image using well-structured JSON." :input_schema
@@ -206,13 +206,13 @@ South and West (resp) are negative."
    (:name "create_database" :description
     "Create a new MongoDB database with option to switch" :input_schema
     (:type "object" :properties
-     (:name (:description "Database name to create" :type string :minLength 1)
+     (:name (:description "Database name to create" :type "string" :minLength 1)
       :switch
       (:description "Whether to switch to the new database after creation" :allOf
-       [(:type string) (:type string :enum ["true" "false"])] :default "false")
+       [(:type "string") (:type "string" :enum ["true" "false"])] :default "false")
       :validateName
       (:description "Whether to validate database name" :allOf
-       [(:type string) (:type string :enum ["true" "false"])] :default "true"))
+       [(:type "string") (:type "string" :enum ["true" "false"])] :default "true"))
      :required ["name" "switch" "validateName"]))])
 
 (defvar gptel-test-tools-gemini
@@ -227,13 +227,13 @@ South and West (resp) are negative."
        (:location
         (:description
          "The latitude and longitude, in degrees.\nSouth and West (resp) are negative."
-         :type object :properties
-         (:lat (:type number :description "Latitude, [-90.0, 90.0]") :lon
-          (:type number :description "Longitude, [-180.0, 180.0]"))
+         :type "object" :properties
+         (:lat (:type "number" :description "Latitude, [-90.0, 90.0]") :lon
+          (:type "number" :description "Longitude, [-180.0, 180.0]"))
          :required ["lat" "lon"])
         :unit
         (:description "The unit of temperature, either 'celsius' or 'fahrenheit'"
-         :type string :enum ["celsius" "farenheit"]))
+         :type "string" :enum ["celsius" "farenheit"]))
        :required ["location"]))
      (:name "record_summary" :description
       "Record summary of an image using well-structured JSON." :parameters
@@ -259,14 +259,14 @@ South and West (resp) are negative."
      (:name "create_database" :description
       "Create a new MongoDB database with option to switch" :parameters
       (:type "object" :properties
-       (:name (:description "Database name to create" :type string :minLength 1)
+       (:name (:description "Database name to create" :type "string" :minLength 1)
         :switch
         (:description "Whether to switch to the new database after creation"
-         :allOf [(:type string) (:type string :enum ["true" "false"])] :default
+         :allOf [(:type "string") (:type "string" :enum ["true" "false"])] :default
          "false")
         :validateName
         (:description "Whether to validate database name" :allOf
-         [(:type string) (:type string :enum ["true" "false"])] :default "true"))
+         [(:type "string") (:type "string" :enum ["true" "false"])] :default "true"))
        :required ["name" "switch" "validateName"]))])])
 
 (defmacro gptel-test-parse-tool-spec (backend-type parsed-tools)
