@@ -80,6 +80,57 @@ South and West (resp) are negative."
             :description "Estimated year that the images was taken, if is it a photo. Only set this if the image appears to be non-fictional. Rough estimates are okay!"
             :type integer
             :optional t)))
+   (gptel-make-tool
+    :function #'identity
+    :name "create_pull_request_review"
+    :description "Create a review on a pull request"
+    :async t
+    :category "testing"
+    :confirm nil
+    :include nil
+    :args
+    (list
+     '(:name "body" :description "Review comment text" :type "string")
+     '(:name "comments" :description "Line-specific comments array of objects to place comments on pull request changes. Requires path and body. For line comments use line or position. For multi-line comments use start_line and line with optional side parameters."
+       :type "array"
+       :items (:additionalProperties :json-false
+               :properties
+               (:body
+                (:description "comment body" :type "string")
+                :line
+                (:anyOf
+                 [(:type "number")
+                  (:type "null")]
+                 :description "line number in the file to comment on. For multi-line comments, the end of the line range")
+                :path
+                (:description "path to the file" :type "string")
+                :position
+                (:anyOf
+                 [(:type "number")
+                  (:type "null")]
+                 :description "position of the comment in the diff")
+                :side
+                (:anyOf
+                 [(:type "string")
+                  (:type "null")]
+                 :description "The side of the diff on which the line resides. For multi-line comments, this is the side for the end of the line range. (LEFT or RIGHT)")
+                :start_line
+                (:anyOf
+                 [(:type "number")
+                  (:type "null")]
+                 :description "The first line of the range to which the comment refers. Required for multi-line comments.")
+                :start_side
+                (:anyOf
+                 [(:type "string")
+                  (:type "null")]
+                 :description "The side of the diff on which the start line resides for multi-line comments. (LEFT or RIGHT)"))
+               :required ["path" "body" "position" "line" "side" "start_line" "start_side"]
+               :type "object"))
+     '(:name "commitId" :description "SHA of commit to review" :type "string")
+     '(:name "event" :description "Review action to perform" :enum ["APPROVE" "REQUEST_CHANGES" "COMMENT"] :type "string")
+     '(:name "owner" :description "Repository owner" :type "string")
+     '(:name "pullNumber" :description "Pull request number" :type "number")
+     '(:name "repo" :description "Repository name" :type "string")))
    (gptel--make-tool
     :function #'identity
     :name "create_database"
@@ -163,6 +214,49 @@ South and West (resp) are negative."
                     :default "true"))
                   :required ["name" "switch" "validateName"]
                   :additionalProperties :json-false)))])
+   (:type "function" :function
+          (:name "create_pull_request_review"
+           :description "Create a review on a pull request"
+           :parameters (:type "object" :properties
+                              (:body
+                               (:description "Review comment text" :type "string")
+                               :comments
+                               (:description "Line-specific comments array of objects to place comments on pull request changes. Requires path and body. For line comments use line or position. For multi-line comments use start_line and line with optional side parameters."
+                                :type "array"
+                                :items (:additionalProperties :json-false
+                                        :properties (:body
+                                                     (:description "comment body" :type "string")
+                                                     :line
+                                                     (:anyOf [(:type "number") (:type "null")]
+                                                      :description "line number in the file to comment on. For multi-line comments, the end of the line range")
+                                                     :path
+                                                     (:description "path to the file" :type "string")
+                                                     :position
+                                                     (:anyOf [(:type "number") (:type "null")]
+                                                      :description "position of the comment in the diff")
+                                                     :side
+                                                     (:anyOf [(:type "string") (:type "null")]
+                                                      :description "The side of the diff on which the line resides. For multi-line comments, this is the side for the end of the line range. (LEFT or RIGHT)")
+                                                     :start_line
+                                                     (:anyOf [(:type "number") (:type "null")]
+                                                      :description "The first line of the range to which the comment refers. Required for multi-line comments.")
+                                                     :start_side
+                                                     (:anyOf [(:type "string") (:type "null")]
+                                                      :description "The side of the diff on which the start line resides for multi-line comments. (LEFT or RIGHT)"))
+                                        :required ["path" "body" "position" "line" "side" "start_line" "start_side"]
+                                        :type "object"))
+                               :commitId
+                               (:description "SHA of commit to review" :type "string")
+                               :event
+                               (:description "Review action to perform" :enum ["APPROVE" "REQUEST_CHANGES" "COMMENT"] :type "string")
+                               :owner
+                               (:description "Repository owner" :type "string")
+                               :pullNumber
+                               (:description "Pull request number" :type "number")
+                               :repo
+                               (:description "Repository name" :type "string"))
+                              :required ["body" "comments" "commitId" "event" "owner" "pullNumber" "repo"]
+                              :additionalProperties :json-false)))
 
 (defvar gptel-test-tools-anthropic
   [(:name "read_url" :description "Fetch and read the contents of a URL"
@@ -203,6 +297,59 @@ South and West (resp) are negative."
        "Estimated year that the images was taken, if is it a photo. Only set this if the image appears to be non-fictional. Rough estimates are okay!"
        :type "integer"))
      :required ["key_colors" "description"]))
+   (:name "create_pull_request_review" :description "Create a review on a pull request" :input_schema
+          (:type "object" :properties
+                 (:body
+                  (:description "Review comment text" :type "string")
+                  :comments
+                  (:description "Line-specific comments array of objects to place comments on pull request changes. Requires path and body. For line comments use line or position. For multi-line comments use start_line and line with optional side parameters." :type "array" :items
+                                (:additionalProperties :json-false :properties
+                                                       (:body
+                                                        (:description "comment body" :type "string")
+                                                        :line
+                                                        (:anyOf
+                                                         [(:type "number")
+                                                          (:type "null")]
+                                                         :description "line number in the file to comment on. For multi-line comments, the end of the line range")
+                                                        :path
+                                                        (:description "path to the file" :type "string")
+                                                        :position
+                                                        (:anyOf
+                                                         [(:type "number")
+                                                          (:type "null")]
+                                                         :description "position of the comment in the diff")
+                                                        :side
+                                                        (:anyOf
+                                                         [(:type "string")
+                                                          (:type "null")]
+                                                         :description "The side of the diff on which the line resides. For multi-line comments, this is the side for the end of the line range. (LEFT or RIGHT)")
+                                                        :start_line
+                                                        (:anyOf
+                                                         [(:type "number")
+                                                          (:type "null")]
+                                                         :description "The first line of the range to which the comment refers. Required for multi-line comments.")
+                                                        :start_side
+                                                        (:anyOf
+                                                         [(:type "string")
+                                                          (:type "null")]
+                                                         :description "The side of the diff on which the start line resides for multi-line comments. (LEFT or RIGHT)"))
+                                                       :required
+                                                       ["path" "body" "position" "line" "side" "start_line" "start_side"]
+                                                       :type "object"))
+                  :commitId
+                  (:description "SHA of commit to review" :type "string")
+                  :event
+                  (:description "Review action to perform" :enum
+                   ["APPROVE" "REQUEST_CHANGES" "COMMENT"]
+                   :type "string")
+                  :owner
+                  (:description "Repository owner" :type "string")
+                  :pullNumber
+                  (:description "Pull request number" :type "number")
+                  :repo
+                  (:description "Repository name" :type "string"))
+                 :required
+                 ["body" "comments" "commitId" "event" "owner" "pullNumber" "repo"]))
    (:name "create_database" :description
     "Create a new MongoDB database with option to switch" :input_schema
     (:type "object" :properties
@@ -256,6 +403,59 @@ South and West (resp) are negative."
          "Estimated year that the images was taken, if is it a photo. Only set this if the image appears to be non-fictional. Rough estimates are okay!"
          :type "integer"))
        :required ["key_colors" "description"]))
+     (:name "create_pull_request_review" :description "Create a review on a pull request" :parameters
+            (:type "object" :properties
+                   (:body
+                    (:description "Review comment text" :type "string")
+                    :comments
+                    (:description "Line-specific comments array of objects to place comments on pull request changes. Requires path and body. For line comments use line or position. For multi-line comments use start_line and line with optional side parameters." :type "array" :items
+                                  (:properties
+                                   (:body
+                                    (:description "comment body" :type "string")
+                                    :line
+                                    (:anyOf
+                                     [(:type "number")
+                                      (:type "null")]
+                                     :description "line number in the file to comment on. For multi-line comments, the end of the line range")
+                                    :path
+                                    (:description "path to the file" :type "string")
+                                    :position
+                                    (:anyOf
+                                     [(:type "number")
+                                      (:type "null")]
+                                     :description "position of the comment in the diff")
+                                    :side
+                                    (:anyOf
+                                     [(:type "string")
+                                      (:type "null")]
+                                     :description "The side of the diff on which the line resides. For multi-line comments, this is the side for the end of the line range. (LEFT or RIGHT)")
+                                    :start_line
+                                    (:anyOf
+                                     [(:type "number")
+                                      (:type "null")]
+                                     :description "The first line of the range to which the comment refers. Required for multi-line comments.")
+                                    :start_side
+                                    (:anyOf
+                                     [(:type "string")
+                                      (:type "null")]
+                                     :description "The side of the diff on which the start line resides for multi-line comments. (LEFT or RIGHT)"))
+                                   :required
+                                   ["path" "body" "position" "line" "side" "start_line" "start_side"]
+                                   :type "object"))
+                    :commitId
+                    (:description "SHA of commit to review" :type "string")
+                    :event
+                    (:description "Review action to perform" :enum
+                     ["APPROVE" "REQUEST_CHANGES" "COMMENT"]
+                     :type "string")
+                    :owner
+                    (:description "Repository owner" :type "string")
+                    :pullNumber
+                    (:description "Pull request number" :type "number")
+                    :repo
+                    (:description "Repository name" :type "string"))
+                   :required
+                   ["body" "comments" "commitId" "event" "owner" "pullNumber" "repo"]))
      (:name "create_database" :description
       "Create a new MongoDB database with option to switch" :parameters
       (:type "object" :properties
