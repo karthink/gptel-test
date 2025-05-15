@@ -27,6 +27,21 @@
           (:success strs)))
       (setq strs (delq nil (nreverse strs))))))
 
+(cl-defmethod gptel-test--read-response ((_backend gptel-gemini) &optional from to)
+  (setq from (or from (point-min))
+        to (or to (point-max)))
+  (save-restriction
+    (narrow-to-region from to)
+    (goto-char from)
+    (let ((strs))
+      (while (re-search-forward "{" nil t)
+        (backward-char)
+        (thread-first
+          (gptel--json-read)
+          (map-nested-elt '(:candidates 0 :content :parts 0 :text))
+          (push strs)))
+      (setq strs (delq nil (nreverse strs))))))
+
 (defun gptel-org--test-compare-org (md-list)
   "Given a list of markdown-formatted strings MD-LIST, covert it to
 Org markup incrementally and display both in buffers."
@@ -159,3 +174,26 @@ Key features of /Qlot/ include:
 This makes Qlot useful for maintaining a clean workspace, especially when working with multiple Common Lisp projects."))
   (gptel-org--test-conversion 5 md org)
   (gptel-org--test-stream-conversion 5 md org))
+
+(let ((md '("Okay"
+            ", that's a fascinating and relevant topic, especially given the increasing accessibility of powerful personal"
+            " computing hardware. To research the performance of local large language models (LLMs) on"
+            " the M1 Mac Studio Ultra, I propose the following plan:\n\n1.  *Gather Search Terms:* Compile a list of relevant search terms to use with"
+            " the =internet_search= tool. These terms should include specific LLMs (e.g., Llama, Alpaca, GPT-J), the M1"
+            " Mac Studio Ultra, and performance metrics (e.g., inference speed, memory usage, quantization).\n2.  *Initial Search:* Perform initial searches using a broad range of search terms to identify relevant articles, blog posts, forum discussions"
+            ", and GitHub repositories.\n3.  *Filter and Prioritize Results:* Analyze the search results to identify the most credible and informative sources. Prioritize results that include quantitative performance data (e.g., benchmarks, latency measurements).\n4"
+            ".  *Deep Dive into Key Resources:* Use the =read_website= tool to extract and analyze the content of the most promising articles and blog posts. Summarize the key findings and performance metrics.\n5.  *GitHub Exploration:* If the search results reveal relevant GitHub repositories, examine the code and documentation to understand how LL"
+            "Ms are being optimized for the M1 Mac Studio Ultra.\n6.  *Synthesize Findings:* Combine the information gathered from different sources to create a comprehensive overview of the performance of local LLMs on the M1 Mac Studio Ultra. Identify any trends, limitations, or areas for further research.\n\nDoes this plan"
+            " sound good to you? If so, I'll start by generating some search terms."))
+      (org "Okay, that's a fascinating and relevant topic, especially given the increasing accessibility of powerful personal computing hardware. To research the performance of local large language models (LLMs) on the M1 Mac Studio Ultra, I propose the following plan:
+
+1.  /Gather Search Terms:/ Compile a list of relevant search terms to use with the =internet_search= tool. These terms should include specific LLMs (e.g., Llama, Alpaca, GPT-J), the M1 Mac Studio Ultra, and performance metrics (e.g., inference speed, memory usage, quantization).
+2.  /Initial Search:/ Perform initial searches using a broad range of search terms to identify relevant articles, blog posts, forum discussions, and GitHub repositories.
+3.  /Filter and Prioritize Results:/ Analyze the search results to identify the most credible and informative sources. Prioritize results that include quantitative performance data (e.g., benchmarks, latency measurements).
+4.  /Deep Dive into Key Resources:/ Use the =read_website= tool to extract and analyze the content of the most promising articles and blog posts. Summarize the key findings and performance metrics.
+5.  /GitHub Exploration:/ If the search results reveal relevant GitHub repositories, examine the code and documentation to understand how LLMs are being optimized for the M1 Mac Studio Ultra.
+6.  /Synthesize Findings:/ Combine the information gathered from different sources to create a comprehensive overview of the performance of local LLMs on the M1 Mac Studio Ultra. Identify any trends, limitations, or areas for further research.
+
+Does this plan sound good to you? If so, I'll start by generating some search terms."))
+  (gptel-org--test-conversion 6 md org)
+  (gptel-org--test-stream-conversion 6 md org))
