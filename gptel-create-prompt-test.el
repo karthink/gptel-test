@@ -178,6 +178,7 @@ preselected for now, see below.)"
     "openai-md" "examples/openai-prompt-md.eld"
   (with-gptel-chat-file
    "examples/prompt-creation.md" openai nil
+   (setf (alist-get 'fundamental-mode gptel-prompt-prefix-alist) "#### ")
    (gptel--create-prompt 1792)))
 
 ;; Test with the cursor before point-max (#723):
@@ -185,6 +186,7 @@ preselected for now, see below.)"
     "openai-md-before-max" "examples/openai-prompt-md-before-max.eld"
   (with-gptel-chat-file
    "examples/prompt-creation.md" openai nil
+   (setf (alist-get 'fundamental-mode gptel-prompt-prefix-alist) "#### ")
    (goto-char 1492)
    (gptel--create-prompt)))
 
@@ -193,6 +195,7 @@ preselected for now, see below.)"
     "anthropic-md" "examples/anthropic-prompt-md.eld"
   (with-gptel-chat-file
    "examples/prompt-creation.md" anthropic nil
+   (setf (alist-get 'fundamental-mode gptel-prompt-prefix-alist) "#### ")
    (gptel--create-prompt 1792)))
 
 ;;;; Gemini
@@ -200,6 +203,7 @@ preselected for now, see below.)"
     "gemini-md" "examples/gemini-prompt-md.eld"
   (with-gptel-chat-file
    "examples/prompt-creation.md" gemini nil
+   (setf (alist-get 'fundamental-mode gptel-prompt-prefix-alist) "#### ")
    (gptel--create-prompt 1792)))
 
 ;;;; Ollama
@@ -207,6 +211,7 @@ preselected for now, see below.)"
     "ollama-md" "examples/ollama-prompt-md.eld"
   (with-gptel-chat-file
    "examples/prompt-creation.md" ollama nil
+   (setf (alist-get 'fundamental-mode gptel-prompt-prefix-alist) "#### ")
    (gptel--create-prompt 1792)))
 
 ;;;; Kagi
@@ -315,10 +320,12 @@ Some details"
 Some details")))))
         (should (equal
                  (with-temp-buffer
-                   (delay-mode-hooks
-                     (insert text)
-                     (org-mode)
-                     (gptel--create-prompt (point-max))))
+                   (let ((gptel-prompt-prefix-alist))
+                     (delay-mode-hooks
+                       (insert text)
+                       (org-mode)
+                       (setf (alist-get 'org-mode gptel-prompt-prefix-alist) nil)
+                       (gptel--create-prompt (point-max)))))
                  result)))))
 
 ;;; Org-mode without branching

@@ -44,9 +44,9 @@
     ;; tool parsing: Is it capturing the tool calls in testinfo, the info plist?
     (let* ((tool-use (plist-get testinfo :tool-use)))
       (cl-loop for tool-call-result in ;note: prefix "toolu_" has been stripped from the ids
-               '((:id "01Q7ptGyMTHtj8NTAu1q93qS" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir3"))
-                 (:id "01Jqbxt5WYUt6RfpoBCHpA6X" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir2"))
-                 (:id "01GwpAyin6URSPn7ZuGSjXKz" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir1")))
+               '((:id "toolu_01Q7ptGyMTHtj8NTAu1q93qS" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir3"))
+                 (:id "toolu_01Jqbxt5WYUt6RfpoBCHpA6X" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir2"))
+                 (:id "toolu_01GwpAyin6URSPn7ZuGSjXKz" :name "make_directory" :input nil :args (:parent "/tmp" :name "testdir1")))
                for id = (plist-get tool-call-result :id)
                for tool-call-found = (cl-find-if (lambda (tool-use-each) (equal (plist-get tool-use-each :id) id)) tool-use)
                do (should (equal (plist-get tool-call-found :args)
