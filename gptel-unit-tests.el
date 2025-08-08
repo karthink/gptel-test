@@ -116,6 +116,82 @@ then some more text to end."))
                                (:text "\n\nthen some more text to end.")))))))
       (delete-file "/tmp/medialinks.txt"))))
 
+;;; Tests for parsing JSON schema supplied in various forms
+(ert-deftest gptel-test-dispatch-schema-type () 
+  "Shorthand form tests for `gptel--dispatch-schema-type'."
+  (should (equal (gptel--dispatch-schema-type
+                  "name, chemical_formula str, toxicity num")
+                 '( :type "object" :properties ( :name (:type "string")
+                                                 :chemical_formula (:type "string")
+                                                 :toxicity (:type "number")))))
+  (should (equal (gptel--dispatch-schema-type
+                  "[name, chemical_formula string, toxicity number]")
+                 (list :type "object"
+                       :properties (list :items
+                                         '( :type "array"
+                                            :items
+                                            ( :type "object"
+                                              :properties ( :name (:type "string")
+                                                            :chemical_formula (:type "string")
+                                                            :toxicity (:type "number")))))
+                       :required ["items"]
+                       :additionalProperties :json-false)))
+  (should (equal (gptel--dispatch-schema-type
+                  "name: Colloquial name of compound
+                   chemical_formula str: Formula for compound
+                   toxicity int: 1-10 denoting toxicity to humans")
+                 '( :type "object"
+                    :properties ( :name ( :type "string"
+                                          :description "Colloquial name of compound")
+                                  :chemical_formula ( :type "string"
+                                                      :description "Formula for compound")
+                                  :toxicity ( :type "integer"
+                                              :description "1-10 denoting toxicity to humans")))))
+  (should (equal (gptel--dispatch-schema-type
+                  "[name: Colloquial name of compound
+                    chemical_formula str: Formula for compound
+                    toxicity bool: whether the compound is toxic]")
+                 '( :type "object"
+                    :properties
+                    ( :items
+                      ( :type "array"
+                        :items
+                        ( :type "object"
+                          :properties
+                          ( :name ( :type "string"
+                                    :description "Colloquial name of compound")
+                            :chemical_formula ( :type "string"
+                                                :description "Formula for compound")
+                            :toxicity ( :type "boolean"
+                                        :description "whether the compound is toxic")))))
+                    :required ["items"]
+                    :additionalProperties :json-false))))
+
+(ert-deftest gptel-test-dispatch-schema-type-advanced ()
+  "Advanced shorthand form test for `gptel--dispatch-schema-type'."
+  ;; Test with
+  ;; - missing type
+  ;; - missing description
+  ;; - missing ":" separator
+  ;; - missing type, description and separator
+  (should
+   (equal (gptel--dispatch-schema-type
+           "[name  str: Name of cat
+                    age   num
+                    hobby
+                    bio      : One-line biography for cat]")
+          '( :type "object"
+             :properties
+             ( :items
+               ( :type "array" :items
+                 ( :type "object" :properties
+                   ( :name ( :type "string" :description "Name of cat")
+                     :age ( :type "number")
+                     :hobby ( :type "string")
+                     :bio ( :type "string" :description
+                            "One-line biography for cat")))))
+             :required ["items"] :additionalProperties :json-false))))
+
 ;; ;; Markdown mode is not installed in emacs -q
 
 ;; (ert-deftest gptel-test-media-link-parsing-md-1 ()
