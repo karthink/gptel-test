@@ -150,7 +150,7 @@ then some more text to end."))
   (should (equal (gptel--dispatch-schema-type
                   "[name: Colloquial name of compound
                     chemical_formula str: Formula for compound
-                    toxicity bool: whether the compound is toxic]")
+                    toxicity bool: whether the compound is toxic   ]")
                  '( :type "object"
                     :properties
                     ( :items
@@ -174,12 +174,15 @@ then some more text to end."))
   ;; - missing description
   ;; - missing ":" separator
   ;; - missing type, description and separator
+  ;; - leading and trailing whitespace
   (should
    (equal (gptel--dispatch-schema-type
-           "[name  str: Name of cat
-                    age   num
-                    hobby
-                    bio      : One-line biography for cat]")
+           "  [name  str: Name of cat
+                      age   num
+                      hobby
+                      bio      : One-line biography for cat    ]
+
+           ")
           '( :type "object"
              :properties
              ( :items

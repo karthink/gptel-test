@@ -57,7 +57,7 @@ INCREMENT is the size of chunks to feed the process filter."
         (with-temp-buffer
           (setf (process-buffer proc) (current-buffer))
           (while outputs (gptel-curl--stream-filter proc (pop outputs))))
-      (setf (alist-get proc gptel--request-alist) nil)
+      (setf (alist-get proc gptel--request-alist nil t) nil)
       (delete-process proc))
     (list (car-safe reasoning-list)     ;Did the reasoning stream end with `t'?
           (string-join (nreverse (cdr-safe reasoning-list))) ;Correct reasoning content?
