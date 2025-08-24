@@ -91,6 +91,38 @@ output.  It should contain a list of three items:
 
 ;;;; OpenAI-compatible
 
+;;;;; llama.cpp
+(gptel-test-stream-parsing "llamacpp-01a" 'openai
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.eld"
+  800)
+
+(gptel-test-stream-parsing "llamacpp-01b" 'openai
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.eld"
+  400)
+
+(gptel-test-stream-parsing "llamacpp-01c" 'openai
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_llamacpp_glm4.5_01.eld"
+  40)
+
+;;;;; vLLM
+(gptel-test-stream-parsing "vllm-01a" 'openai
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.eld"
+  800)
+
+(gptel-test-stream-parsing "vllm-01b" 'openai
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.eld"
+  400)
+
+(gptel-test-stream-parsing "vllm-01c" 'openai
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.txt"
+  "examples-responses/openai/thinking_stream_vllm_glm4.5_01.eld"
+  40)
+
 
 ;;;;; Openrouter
 (gptel-test-stream-parsing "openrouter-01a" 'openai

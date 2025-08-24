@@ -6,6 +6,7 @@
 (require 'gptel-anthropic)
 (require 'gptel-gemini)
 (require 'gptel-ollama)
+(require 'gptel-openai-extras)
 (require 'gptel-kagi)
 
 ;; Go from a buffer with included metadata to a list of prompts.
@@ -62,6 +63,8 @@ is used in the test data.")
                 :name "Gemini" :models '(gemini-1.5-pro-latest)))
     (ollama    . ,(gptel--make-ollama
                 :name "Ollama" :models '(testmodel)))
+    (deepseek  . ,(gptel--make-deepseek
+                   :name "Deepseek" :models '(deepseek-reasoner)))
     (kagi      . ,(gptel--make-kagi :name "Kagi" :models '(fastgpt summarize:agnes))))
   "Dummy models for testing gptel.")
 
