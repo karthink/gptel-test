@@ -4,6 +4,7 @@
 (require 'gptel-curl)
 (require 'gptel-openai)
 (require 'gptel-ollama)
+(require 'gptel-gemini)
 (require 'gptel-openai-extras)
 (require 'gptel-anthropic)
 
