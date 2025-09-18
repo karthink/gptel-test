@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 (require 'ert)
 (require 'gptel)
-(require 'gptel-curl)
+(require 'gptel-request)
 (require 'gptel-openai)
 (require 'gptel-ollama)
 (require 'gptel-gemini)
