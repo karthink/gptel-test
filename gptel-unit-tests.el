@@ -255,5 +255,42 @@ then some more text to end."))
 ;;                                (:text "\n\nthen some more text to end.")))))))
 ;;       (delete-file "/tmp/medialinks.txt"))))
 
+;;; Test for declarative list modification DSL
+(ert-deftest gptel-test--modify-value ()
+  "Test `gptel--modify-list'."
+  ;; string and string
+  (should (equal (gptel--modify-list "original\n" "extra") "extra"))
+  (should (equal (gptel--modify-list "original\n" '(:append "extra")) "original\nextra"))
+  (should (equal (gptel--modify-list "original\n" '(:prepend "extra")) "extraoriginal\n"))
+  (should (equal (gptel--modify-list "original\n" '(:function upcase)) "ORIGINAL\n"))
+  ;; list and list
+  (should (equal (gptel--modify-list '(a b c) '(d e f)) '(d e f)))
+  (should (equal (gptel--modify-list '(a b c) '(:append (d e))) '(a b c d e)))
+  (should (equal (gptel--modify-list '(a b c) '(:prepend (x y))) '(x y a b c)))
+  (should (equal (gptel--modify-list '(1 2 3) '(:function reverse)) '(3 2 1)))
+  (should (equal (gptel--modify-list '("hello") '(:append (" world"))) '("hello" " world")))
+  (should (equal (gptel--modify-list '("world") '(:prepend ("hello "))) '("hello " "world")))
+  ;; :merge test
+  (should (equal (gptel--modify-list '(:a 1 :b 2) '(:merge (:b 3 :c 4))) '(:a 1 :b 3 :c 4)))
+  (should (equal (gptel--modify-list '(:x "hello" :y 42) '(:merge (:x "world" :z nil)))
+                 '(:x "world" :y 42 :z nil)))
+  ;; :eval test
+  (should (equal (gptel--modify-list "unused" '(:eval (+ 2 3))) 5))
+  (should (equal (gptel--modify-list '(a b) '(:eval (reverse '(x y z)))) '(z y x)))
+  ;; string and list combinations
+  (should (equal (gptel--modify-list "hello" '(:append " world")) "hello world"))
+  (should (equal (gptel--modify-list "world" '(:prepend "hello ")) "hello world"))
+  ;; multiple operations
+  (should (equal (gptel--modify-list "base" '(:append "1" :prepend "0")) "0base1"))
+  (should (equal (gptel--modify-list '(b) '(:append (c) :prepend (a))) '(a b c)))
+  ;; non-list mutation (edge cases)
+  (should (equal (gptel--modify-list "original" 42) 42))
+  (should (equal (gptel--modify-list '(a b c) :symbol) :symbol))
+  ;; empty cases
+  (should (equal (gptel--modify-list "" '(:append "text")) "text"))
+  (should (equal (gptel--modify-list '() '(:append (a b))) '(a b)))
+  (should (equal (gptel--modify-list "text" '(:prepend "")) "text"))
+  (should (equal (gptel--modify-list '(a b) '(:prepend ())) '(a b))))
+
 (provide 'gptel-unit-tests)
 ;;; gptel-unit-tests.el ends here
