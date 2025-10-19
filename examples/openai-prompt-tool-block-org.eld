@@ -9,17 +9,17 @@
         "I'm here to assist with your inquiries. How can I help you today?")
  (:role "user" :content "Is mapcar a symbol?")
  (:role "assistant" :tool_calls
-        [(:type "function" :id "mXJojZBa789q7ECEVMMFMmjX" :function
+        [(:type "function" :id "call_mXJojZBa789q7ECEVMMFMmjX" :function
                 (:name "symbol_exists" :arguments "{\"symbol\":\"mapcar\"}"))])
- (:role "tool" :tool_call_id "mXJojZBa789q7ECEVMMFMmjX" :content "mapcar
+ (:role "tool" :tool_call_id "call_mXJojZBa789q7ECEVMMFMmjX" :content "mapcar
 
 *Fake Heading Needing Unescape")
  (:role "assistant" :content "Yes, =mapcar= is a symbol in Emacs Lisp.")
  (:role "user" :content "Is cat-dawg a symbol?")
  (:role "assistant" :tool_calls
-        [(:type "function" :id "ZJSK6DLEDXwEWvYl6CaRirFy" :function
+        [(:type "function" :id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :function
                 (:name "symbol_exists" :arguments "{\"symbol\":\"cat-dawg\"}"))])
- (:role "tool" :tool_call_id "ZJSK6DLEDXwEWvYl6CaRirFy" :content "cat-dawg
+ (:role "tool" :tool_call_id "call_ZJSK6DLEDXwEWvYl6CaRirFy" :content "cat-dawg
 
 *Fake Heading Needing Unescape")
  (:role "assistant" :content "No, =cat-dawg= is not a symbol in Emacs Lisp.")
