@@ -2,12 +2,7 @@
 (require 'ert)
 (require 'gptel)
 (require 'gptel-org)
-(require 'gptel-openai)
-(require 'gptel-anthropic)
-(require 'gptel-gemini)
-(require 'gptel-ollama)
-(require 'gptel-openai-extras)
-(require 'gptel-kagi)
+(require 'gptel-test-backends)
 
 ;; Go from a buffer with included metadata to a list of prompts.
 
@@ -53,20 +48,6 @@
   "To assist: Be very terse.  Respond in under 100 words if possible.  Speak in specific, topic relevant terminology. Do NOT hedge or qualify. Speak directly and be willing to make creative guesses. Explain your reasoning. if you don’t know, say you don’t know. Never apologize.  Ask questions when unsure."
   "System message for prompt creation tests.  Do not edit, as this
 is used in the test data.")
-
-(defvar gptel-test-backends
-  `((openai    . ,(gptel--make-openai
-                :name "OpenAI" :models '(gpt-4o-mini)))
-    (anthropic . ,(gptel--make-anthropic
-                   :name "Claude" :models '(claude-3-5-sonnet-20240620)))
-    (gemini    . ,(gptel--make-gemini
-                :name "Gemini" :models '(gemini-1.5-pro-latest)))
-    (ollama    . ,(gptel--make-ollama
-                :name "Ollama" :models '(testmodel)))
-    (deepseek  . ,(gptel--make-deepseek
-                   :name "Deepseek" :models '(deepseek-reasoner)))
-    (kagi      . ,(gptel--make-kagi :name "Kagi" :models '(fastgpt summarize:agnes))))
-  "Dummy models for testing gptel.")
 
 ;;; Setup code
 

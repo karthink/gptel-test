@@ -2,25 +2,7 @@
 (require 'ert)
 (require 'gptel)
 (require 'gptel-request)
-(require 'gptel-openai)
-(require 'gptel-ollama)
-(require 'gptel-gemini)
-(require 'gptel-openai-extras)
-(require 'gptel-anthropic)
-
-(defvar gptel-test-backends
-  `((openai    . ,(gptel--make-openai
-                   :name "OpenAI" :models '(gpt-4o-mini)))
-    (anthropic . ,(gptel--make-anthropic
-                   :name "Claude" :models '(claude-3-5-sonnet-20240620)))
-    (gemini    . ,(gptel--make-gemini
-                   :name "Gemini" :models '(gemini-1.5-pro-latest)))
-    (ollama    . ,(gptel--make-ollama
-                   :name "Ollama" :models '(testmodel)))
-    ;; (kagi      . ,(gptel--make-kagi :name "Kagi" :models '(fastgpt summarize:agnes)))
-    (deepseek  . ,(gptel--make-deepseek
-                   :name "Deepseek" :models '(deepseek-reasoner))))
-  "Dummy models for testing gptel.")
+(require 'gptel-test-backends)
 
 ;;; Reasoning stream tests
 (defun gptel-test-stream-filter (backend-name stream-output-file &optional increment)

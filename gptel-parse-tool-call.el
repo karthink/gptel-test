@@ -2,29 +2,13 @@
 (require 'ert)
 (require 'gptel)
 (require 'gptel-org)
-(require 'gptel-openai)
-(require 'gptel-anthropic)
-(require 'gptel-gemini)
-(require 'gptel-ollama)
-(require 'gptel-kagi)
+(require 'gptel-test-backends)
 (require 'cl-lib)
 (require 'map)
 
 ;; Read an API output stream and construct the response and tool calls
 
 ;;; General
-
-(defvar gptel-test-backends
-  `((openai    . ,(gptel--make-openai
-                   :name "OpenAI" :models '(gpt-4o-mini)))
-    (anthropic . ,(gptel--make-anthropic
-                   :name "Claude" :models '(claude-3-5-sonnet-20240620)))
-    (gemini    . ,(gptel--make-gemini
-                   :name "Gemini" :models '(gemini-1.5-pro-latest)))
-    (ollama    . ,(gptel--make-ollama
-                   :name "Ollama" :models '(testmodel)))
-    (kagi      . ,(gptel--make-kagi :name "Kagi" :models '(fastgpt summarize:agnes))))
-  "Dummy models for testing gptel.")
 
 ;;; Anthropic
 
