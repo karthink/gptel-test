@@ -134,10 +134,11 @@ output.  It should contain a list of three items:
   "examples-responses/openai/thinking_stream_deepseek_01.eld"
   800)
 
-(gptel-test-stream-parsing "deepseek-01b" 'deepseek
-  "examples-responses/openai/thinking_stream_deepseek_02.txt"
-  "examples-responses/openai/thinking_stream_deepseek_02.eld"
-  400)
+;; ;; TODO: This test file is too large, generate a smaller one
+;; (gptel-test-stream-parsing "deepseek-01b" 'deepseek
+;;   "examples-responses/openai/thinking_stream_deepseek_02.txt"
+;;   "examples-responses/openai/thinking_stream_deepseek_02.eld"
+;;   400)
 
 ;; ;; MAYBE The test file for this next text is very large, ignoring for now
 
