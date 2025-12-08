@@ -5,18 +5,18 @@
 :GPTEL_BOUNDS: ((tool (745 835 \"mXJojZBa789q7ECEVMMFMmjX\") (984 1078 \"ZJSK6DLEDXwEWvYl6CaRirFy\")) (response (587 652) (847 887) (1090 1135) (1205 1281)))
 :END:
 *Prompt*: Yo my dawg, what up?")])
- (:role "model" :parts (:text "I'm here to assist with your inquiries. How can I help you today?"))
+ (:role "model" :parts [(:text "I'm here to assist with your inquiries. How can I help you today?")])
  (:role "user" :parts [(:text "Is mapcar a symbol?")])
- (:role "model" :parts [(:functionCall (:name "symbol_exists" :args (:symbol "mapcar")))])
+ (:role "model" :parts [(:functionCall (:name "symbol_exists" :args (:symbol "mapcar")) :thoughtSignature "mXJojZBa789q7ECEVMMFMmjX")])
  (:role "user" :parts [(:functionResponse (:name "symbol_exists" :response (:name "symbol_exists" :content "mapcar
 
 *Fake Heading Needing Unescape")))])
- (:role "model" :parts (:text "Yes, =mapcar= is a symbol in Emacs Lisp."))
+ (:role "model" :parts [(:text "Yes, =mapcar= is a symbol in Emacs Lisp.")])
  (:role "user" :parts [(:text "Is cat-dawg a symbol?")])
- (:role "model" :parts [(:functionCall (:name "symbol_exists" :args (:symbol "cat-dawg")))])
+ (:role "model" :parts [(:functionCall (:name "symbol_exists" :args (:symbol "cat-dawg")) :thoughtSignature "ZJSK6DLEDXwEWvYl6CaRirFy")])
  (:role "user" :parts [(:functionResponse (:name "symbol_exists" :response (:name "symbol_exists" :content "cat-dawg
 
 *Fake Heading Needing Unescape")))])
- (:role "model" :parts (:text "No, =cat-dawg= is not a symbol in Emacs Lisp."))
+ (:role "model" :parts [(:text "No, =cat-dawg= is not a symbol in Emacs Lisp.")])
  (:role "user" :parts [(:text "That's all I guess.  Try not to kill us all.")])
- (:role "model" :parts (:text "Understood. If you have more questions or need assistance, feel free to ask.")))
+ (:role "model" :parts [(:text "Understood. If you have more questions or need assistance, feel free to ask.")]))
