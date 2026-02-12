@@ -346,7 +346,7 @@ South and West (resp) are negative."
      :required ["name" "switch" "validateName"]))])
 
 (defvar gptel-test-tools-gemini
-  [(:function_declarations
+  [(:functionDeclarations
     [(:name "read_url" :description "Fetch and read the contents of a URL"
       :parameters
       (:type "object" :properties
