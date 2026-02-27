@@ -292,5 +292,30 @@ then some more text to end."))
   (should (equal (gptel--modify-value "text" '(:prepend "")) "text"))
   (should (equal (gptel--modify-value '(a b) '(:prepend ())) '(a b))))
 
+;;; Tests for header-line alignment
+
+(ert-deftest gptel-test-header-line-pixel-alignment ()
+  "Header-line uses pixel-based alignment when `string-pixel-width' is available."
+  (skip-unless (fboundp 'string-pixel-width))
+  (let* ((rhs "[test-model]")
+         (spec `(space :align-to (- right (,(string-pixel-width rhs)))))
+         (align-to (plist-get (cdr spec) :align-to))
+         (offset (caddr align-to)))
+    ;; Pixel path wraps the value in a list: (PIXELS)
+    (should (listp offset))
+    (should (numberp (car offset)))
+    (should (> (car offset) 0))))
+
+(ert-deftest gptel-test-header-line-char-fallback-offset ()
+  "Header-line char fallback includes the +5 padding offset."
+  (let* ((rhs "[test-model]")
+         (spec `(space :align-to (- right ,(+ 5 (string-width rhs)))))
+         (align-to (plist-get (cdr spec) :align-to))
+         (offset (caddr align-to)))
+    ;; Char path: offset is a plain number, not a list
+    (should (numberp offset))
+    ;; Should be string-width + 5
+    (should (= offset (+ 5 (string-width rhs))))))
+
 (provide 'gptel-unit-tests)
 ;;; gptel-unit-tests.el ends here
