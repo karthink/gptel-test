@@ -6,10 +6,10 @@
 (require 'cl-lib)
 (require 'map)
 
-;; Unit tests for `gptel--inject-tool-args'
-(ert-deftest gptel-test-inject-tool-args ()
+;; Unit tests for `gptel--inject-tool-call'
+(ert-deftest gptel-test-inject-tool-call ()
   "Ensure that tool argument injection into messages arrays works for all backends."
-  (skip-unless (fboundp 'gptel--inject-tool-args))
+  (skip-unless (fboundp 'gptel--inject-tool-call))
   (let* ((backend (alist-get 'openai gptel-test-backends))
          (testinfo
           `( :backend ,backend
@@ -28,10 +28,31 @@
 We need to search the web. Use functions.WebSearch.")])))
          (tool-call '( :id "fc_bb3ceed0-6c06-49ca-8851-8bde396c85aa" :name "WebSearch"
                        :args (:count 5 :query "Hamlet 1996 reviews")))
-         (new-args '(:count 10 :query "Some other movie")))
-    (gptel--inject-tool-args backend (plist-get testinfo :data) tool-call new-args)
+         (new-args '(:args (:count 10 :query "Some other movie")))
+         (new-name '(:name "NewSearch")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
     (should (equal (map-nested-elt testinfo '(:data :messages 2 :tool_calls 0 :function :arguments))
-                   (gptel--json-encode new-args))))
+                   (gptel--json-encode (plist-get new-args :args))))
+
+    ;; Change tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :messages 2 :tool_calls 0 :function :name))
+                   (plist-get new-name :name)))
+
+    ;; Change args and tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call
+                             '(:name "NewSearch2" :args (:count 20 :query "Hamlet 1944")))
+    (let ((new-call (map-nested-elt testinfo '(:data :messages 2 :tool_calls 0 :function))))
+      (should (equal (plist-get new-call :name) "NewSearch2"))
+      (should (equal (plist-get new-call :arguments)
+                     (gptel--json-encode '(:count 20 :query "Hamlet 1944")))))
+
+    ;; Delete tool call
+    (let ((orig-messages (copy-tree (map-nested-elt testinfo '(:data :messages)))))
+      (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo '(:data :messages))
+                     (substring orig-messages 0 -1)))))
 
   (let* ((backend (alist-get 'anthropic gptel-test-backends))
          (testinfo
@@ -48,10 +69,22 @@ We need to search the web. Use functions.WebSearch.")])))
                                         "WebSearch" :input (:query "Hamlet 1996 reviews"))])])))
          (tool-call '( :id "toolu_01J1ZgM54cxXMsEwQn8zMJxH" :name "WebSearch" :input nil
                        :args (:query "Hamlet 1996 reviews")))
-         (new-args '(:query "Some other moview")))
-    (gptel--inject-tool-args backend (plist-get testinfo :data) tool-call new-args)
-    (should (eq (map-nested-elt testinfo '(:data :messages 1 :content 1 :input))
-                new-args)))
+         (new-args '(:args (:query "Some other movie")))
+         (new-name '(:name "NewSearch")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
+    (should (equal (map-nested-elt testinfo '(:data :messages 1 :content 1 :input))
+                   (plist-get new-args :args)))
+    ;; Change tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :messages 1 :content 1 :name))
+                   (plist-get new-name :name)))
+    ;; Delete tool call
+    (let ((expected-content
+           [(:type "text" :text "I'll search for reviews of Hamlet (1996) for you.")]))
+      (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo '(:data :messages 1 :content))
+                     expected-content))))
 
   (let* ((backend (alist-get 'gemini gptel-test-backends))
          (testinfo
@@ -67,10 +100,23 @@ We need to search the web. Use functions.WebSearch.")])))
                          :thoughtSignature "EtEDCs4DAb4")])])))
          (tool-call '( :name "WebSearch"
                        :args (:query "Hamlet movie 1996 reviews critical reception")))
-         (new-args '(:query "Some other movie")))
-    (gptel--inject-tool-args backend (plist-get testinfo :data) tool-call new-args)
-    (should (eq (map-nested-elt testinfo '(:data :contents 1 :parts 1 :functionCall :args))
-                new-args)))
+         (new-args '(:args (:query "Some other movie")))
+         (new-name '(:name "NewSearch")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
+    (should (equal (map-nested-elt testinfo '(:data :contents 1 :parts 1 :functionCall :args))
+                   (plist-get new-args :args)))
+    ;; Change tool name
+    (setq tool-call (list :name "WebSearch" :args (plist-get new-args :args)))
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :contents 1 :parts 1 :functionCall :name))
+                   (plist-get new-name :name)))
+    ;; Delete tool call
+    (setq tool-call (list :name (plist-get new-name :name) :args (plist-get new-args :args)))
+    (let ((expected-parts [(:text "")]))
+      (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo '(:data :contents 1 :parts))
+                     expected-parts))))
 
   (let* ((backend (alist-get 'ollama gptel-test-backends))
          (testinfo
@@ -95,10 +141,32 @@ We need to search the web. Use functions.WebSearch.")])))
                                             :arguments (:city "London")))])]
               :stream :json-false)))
          (tool-call '( :name "get_temperature" :args (:city "London")))
-         (new-args '(:city "Khartoum")))
-    (gptel--inject-tool-args backend (plist-get testinfo :data) tool-call new-args)
-    (should (eq (map-nested-elt testinfo '(:data :messages 1 :tool_calls 2 :function :arguments))
-                new-args))))
+         (new-args '(:args (:city "Khartoum")))
+         (new-name '(:name "get_temp")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
+    (should (equal (map-nested-elt testinfo '(:data :messages 1 :tool_calls 2 :function :arguments))
+                   (plist-get new-args :args)))
+
+    ;; Change tool name
+    (setq tool-call (list :name "get_temperature" :args (plist-get new-args :args)))
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :messages 1 :tool_calls 2 :function :name))
+                   (plist-get new-name :name)))
+    ;; Delete tool call
+    (setq tool-call (list :name (plist-get new-name :name) :args (plist-get new-args :args)))
+    (let ((expected-calls [( :type "function"
+                             :function ( :index 0 :name "get_temperature"
+                                         :arguments (:city "New York")))
+                           ( :type "function"
+                             :function ( :index 1 :name "get_conditions"
+                                         :arguments (:city "New York")))
+                           ( :type "function"
+                             :function ( :index 3 :name "get_conditions"
+                                         :arguments (:city "London")))]))
+      (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo '(:data :messages 1 :tool_calls))
+                     expected-calls)))))
 
 ;; ;; Ollama sample messages array
 ;; ( :model "qwen3"
