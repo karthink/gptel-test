@@ -166,7 +166,49 @@ We need to search the web. Use functions.WebSearch.")])))
                                          :arguments (:city "London")))]))
       (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
       (should (equal (map-nested-elt testinfo '(:data :messages 1 :tool_calls))
-                     expected-calls)))))
+                     expected-calls))))
+
+  (let* ((backend (alist-get 'bedrock gptel-test-backends))
+         (testinfo
+          `( :backend ,backend
+             :data (:messages
+                    [( :role "assistant" :content
+                       [(:toolUse (:name "my_tool" :input (:arg1 1) :toolUseId "123"))])])))
+         (tool-call '( :id "123" :name "my_tool"))
+         (new-args '(:args (:arg1 2 :arg2 3)))
+         (new-name '(:name "my_tool_new")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
+    (should (equal (map-nested-elt testinfo '(:data :messages 0 :content 0 :toolUse :input))
+                   (plist-get new-args :args)))
+
+    ;; Change tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :messages 0 :content 0 :toolUse :name))
+                   (plist-get new-name :name)))
+
+    ;; Change args and tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call
+                             '(:name "my_tool_new_2" :args (:arg1 4)))
+    (let ((new-call (map-nested-elt testinfo '(:data :messages 0 :content 0 :toolUse))))
+      (should (equal (plist-get new-call :name) "my_tool_new_2"))
+      (should (equal (plist-get new-call :input) '(:arg1 4))))
+
+    ;; Delete tool call (single item in content -> deletes whole message)
+    (let ((testinfo-delete (copy-tree testinfo t)))
+      (gptel--inject-tool-call backend (plist-get testinfo-delete :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo-delete '(:data :messages)) [])))
+
+    ;; Delete tool call (multiple items in content -> deletes just the toolUse chunk)
+    (let ((testinfo-multi
+           `( :backend ,backend
+              :data (:messages
+                     [( :role "assistant" :content
+                        [(:text "Here is a tool call")
+                         (:toolUse (:name "my_tool" :input (:arg1 1) :toolUseId "123"))])]))))
+      (gptel--inject-tool-call backend (plist-get testinfo-multi :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo-multi '(:data :messages 0 :content))
+                     [(:text "Here is a tool call")])))))
 
 ;; ;; Ollama sample messages array
 ;; ( :model "qwen3"
