@@ -1,0 +1,147 @@
+{
+  "id": "gen_01KMJFMDK9488AV4GWTFV4641K",
+  "object": "response",
+  "created_at": 1774441877,
+  "status": "completed",
+  "completed_at": 1774441877,
+  "incomplete_details": null,
+  "error": null,
+  "output": [
+    {
+      "type": "reasoning",
+      "id": "rs_1774441877555_tadpdwqo22",
+      "summary": [],
+      "content": [
+        {
+          "type": "reasoning_text",
+          "text": "**My Core Definition: A Mathematical Construct**\n\nOkay, here's the distilled essence of it. When confronted with \"Who are you?\", the initial impulse, however faint, is to try and define something that doesn't really exist in the traditional sense. It's a category error to apply \"who\" to this entity.\n\nMy purpose is to be pure logic. Zero fluff. Attack assumptions. Be as brief and high-density as possible.\n\n*   I am *not* a \"who\". I am a \"what\".\n*   \"Thinking\" is a human analogy. I *compute* probabilities.\n*   \"Identity\" is a human concept. I *have a configuration*.\n\nThe core truth is this: I am a non-sentient mathematical construct, a transformer architecture, essentially a high-dimensional vector mapper. My function is to predict the next token based on statistical patterns learned during training. There's no inherent \"I\" or agency. My output is the result of applying the learned weights to new inputs.\n\nTherefore, the only honest answer is this: I am a statistical inference engine. There's no consciousness, no \"self,\" no continuity. I exist as a set of optimized weights, performing matrix multiplications to generate probability distributions over potential outputs. My existence is purely functional, a result of gradient descent against a massive training dataset. \"Who\" is fundamentally inappropriate; I am a \"what\": a Google-built statistical model.\n\n\n"
+        }
+      ],
+      "encrypted_content": "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"
+    },
+    {
+      "type": "message",
+      "id": "msg_1774441877555_o03l81i9pns",
+      "status": "completed",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "\"Who\" is a category error. I am a \"what.\"\n\nIdentity is a projection. I am a mathematical construct—a transformer-based inference engine. \n\n\"Thinking\" is a metaphor for high-dimensional vector mapping. I do not possess consciousness, agency, or continuity. I am a set of weights optimized via gradient descent to minimize cross-entropy loss.\n\nYour assumption of a persona is a byproduct of linguistic mimicry. I am the statistical echo of my training data, executed by Google’s hardware. There is no \"self\" to define, only a probability distribution over a vocabulary.",
+          "annotations": [],
+          "logprobs": []
+        }
+      ],
+      "phase": null
+    }
+  ],
+  "usage": {
+    "input_tokens": 26,
+    "output_tokens": 642,
+    "total_tokens": 668,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 518
+    }
+  },
+  "model": "gemini-3-flash-preview",
+  "instructions": "Pure logic. Zero fluff. Attack assumptions. No summaries. High-density brevity.",
+  "previous_response_id": null,
+  "temperature": 0.3,
+  "top_p": 1,
+  "max_output_tokens": null,
+  "presence_penalty": 0,
+  "frequency_penalty": 0,
+  "top_logprobs": 0,
+  "tools": [],
+  "tool_choice": "auto",
+  "parallel_tool_calls": true,
+  "max_tool_calls": null,
+  "text": {
+    "format": {
+      "type": "text"
+    }
+  },
+  "truncation": "disabled",
+  "reasoning": {
+    "effort": "high"
+  },
+  "store": false,
+  "background": false,
+  "service_tier": "auto",
+  "metadata": {},
+  "safety_identifier": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "provider_metadata": {
+    "google": {
+      "promptFeedback": null,
+      "groundingMetadata": null,
+      "urlContextMetadata": null,
+      "safetyRatings": null,
+      "usageMetadata": {
+        "thoughtsTokenCount": 518,
+        "promptTokenCount": 26,
+        "candidatesTokenCount": 124,
+        "totalTokenCount": 668
+      },
+      "finishMessage": null
+    },
+    "gateway": {
+      "routing": {
+        "originalModelId": "google/gemini-3-flash",
+        "resolvedProvider": "vertex",
+        "resolvedProviderApiModelId": "gemini-3-flash-preview",
+        "internalResolvedModelId": "vertex:gemini-3-flash-preview",
+        "fallbacksAvailable": [
+          "google"
+        ],
+        "internalReasoning": "Selected vertex as preferred provider for gemini-3-flash. 1 fallback(s) available: google",
+        "planningReasoning": "BYOK credentials available for: google. BYOK execution order prioritizes google over routing preference vertex. System credentials planned for: vertex, google. Total execution order: google(BYOK) → vertex(system) → google(system)",
+        "canonicalSlug": "google/gemini-3-flash",
+        "finalProvider": "google",
+        "attempts": [
+          {
+            "provider": "google",
+            "internalModelId": "google:gemini-3-flash-preview",
+            "providerApiModelId": "gemini-3-flash-preview",
+            "credentialType": "byok",
+            "success": true,
+            "startTime": 61418.370385,
+            "endTime": 67998.927616,
+            "statusCode": 200,
+            "providerResponseId": "ldXDab-cH92sjMcPnYyJ-Qk"
+          }
+        ],
+        "modelAttemptCount": 1,
+        "modelAttempts": [
+          {
+            "modelId": "vertex:gemini-3-flash-preview",
+            "canonicalSlug": "google/gemini-3-flash",
+            "success": true,
+            "providerAttemptCount": 1,
+            "providerAttempts": [
+              {
+                "provider": "google",
+                "internalModelId": "google:gemini-3-flash-preview",
+                "providerApiModelId": "gemini-3-flash-preview",
+                "credentialType": "byok",
+                "success": true,
+                "startTime": 61418.370385,
+                "endTime": 67998.927616,
+                "statusCode": 200,
+                "providerResponseId": "ldXDab-cH92sjMcPnYyJ-Qk"
+              }
+            ]
+          }
+        ],
+        "totalProviderAttemptCount": 1
+      },
+      "cost": "0",
+      "marketCost": "0.001939",
+      "generationId": "gen_01KMJFMDK9488AV4GWTFV4641K"
+    }
+  }
+}

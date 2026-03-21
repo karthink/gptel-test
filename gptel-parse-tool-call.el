@@ -54,6 +54,54 @@ We need to search the web. Use functions.WebSearch.")])))
       (should (equal (map-nested-elt testinfo '(:data :messages))
                      (substring orig-messages 0 -1)))))
 
+  (let* ((backend (alist-get 'openai-responses gptel-test-backends))
+         (testinfo
+          `( :backend ,backend
+             :instructions "System message here"
+             :data (:input
+                    [( :role "user" :content "What is the weather?" )
+                     ( :role "assistant" :content "Searching..." )
+                     ( :type "function_call"
+                       :call_id "call_12345"
+                       :name "get_weather"
+                       :arguments "{\"city\":\"London\"}" )
+                     ( :type "function_call"
+                       :call_id "call_67890"
+                       :name "get_time"
+                       :arguments "{\"city\":\"London\"}" )])))
+         (tool-call '( :id "call_12345" :name "get_weather"
+                       :args (:city "London")))
+         (new-args '(:args (:city "Paris")))
+         (new-name '(:name "check_weather")))
+    ;; Change args
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-args)
+    (should (equal (map-nested-elt testinfo '(:data :input 2 :arguments))
+                   (gptel--json-encode (plist-get new-args :args))))
+
+    ;; Change tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call new-name)
+    (should (equal (map-nested-elt testinfo '(:data :input 2 :name))
+                   (plist-get new-name :name)))
+
+    ;; Change args and tool name
+    (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call
+                             '(:name "get_weather_now" :args (:city "Tokyo")))
+    (let ((new-call (map-nested-elt testinfo '(:data :input 2))))
+      (should (equal (plist-get new-call :name) "get_weather_now"))
+      (should (equal (plist-get new-call :arguments)
+                     (gptel--json-encode '(:city "Tokyo")))))
+
+    ;; Delete tool call
+    (let ((expected-input [( :role "user" :content "What is the weather?" )
+                           ( :role "assistant" :content "Searching..." )
+                           ( :type "function_call"
+                             :call_id "call_67890"
+                             :name "get_time"
+                             :arguments "{\"city\":\"London\"}" )]))
+      (gptel--inject-tool-call backend (plist-get testinfo :data) tool-call nil)
+      (should (equal (map-nested-elt testinfo '(:data :input))
+                     expected-input))))
+
   (let* ((backend (alist-get 'anthropic gptel-test-backends))
          (testinfo
           `( :backend ,backend
@@ -518,6 +566,60 @@ We need to search the web. Use functions.WebSearch.")])))
     (let ((data '(:messages [])))
       (gptel--inject-prompt backend data new-msg)
       (should (equal (plist-get data :messages)
+                     (vector new-msg)))))
+
+  (let* ((backend (alist-get 'openai-responses gptel-test-backends))
+         (msg1 '(:role "user" :content "msg1"))
+         (msg2 '(:role "assistant" :content "msg2"))
+         (msg3 '(:role "user" :content "msg3"))
+         (new-msg '(:role "system" :content "new"))
+         (base-data `(:input [,msg1 ,msg2 ,msg3])))
+
+    ;; Case 1: Append single message (default position nil)
+    (let ((data (copy-tree base-data t)))
+      (gptel--inject-prompt backend data new-msg)
+      (should (equal (plist-get data :input)
+                     (vector msg1 msg2 msg3 new-msg))))
+
+    ;; Case 2: Append list of messages
+    (let ((data (copy-tree base-data t))
+          (new-msgs (list new-msg msg1)))
+      (gptel--inject-prompt backend data new-msgs)
+      (should (equal (plist-get data :input)
+                     (vector msg1 msg2 msg3 new-msg msg1))))
+
+    ;; Case 3: Insert at position 0
+    (let ((data (copy-tree base-data t)))
+      (gptel--inject-prompt backend data new-msg 0)
+      (should (equal (plist-get data :input)
+                     (vector new-msg msg1 msg2 msg3))))
+
+    ;; Case 4: Insert at position 1
+    (let ((data (copy-tree base-data t)))
+      (gptel--inject-prompt backend data new-msg 1)
+      (should (equal (plist-get data :input)
+                     (vector msg1 new-msg msg2 msg3))))
+
+    ;; Case 5: Insert at position -1 (before last element)
+    ;; Logic check: (substring [1 2 3] 0 -1) -> [1 2]. (substring [1 2 3] -1) -> [3].
+    ;; Result: [1 2 new 3]. So inserts before the last element.
+    (let ((data (copy-tree base-data t)))
+      (gptel--inject-prompt backend data new-msg -1)
+      (should (equal (plist-get data :input)
+                     (vector msg1 msg2 new-msg msg3))))
+
+    ;; Case 6: Insert at position -2
+    ;; Logic check: (substring [1 2 3] 0 -2) -> [1]. (substring [1 2 3] -2) -> [2 3].
+    ;; Result: [1 new 2 3].
+    (let ((data (copy-tree base-data t)))
+      (gptel--inject-prompt backend data new-msg -2)
+      (should (equal (plist-get data :input)
+                     (vector msg1 new-msg msg2 msg3))))
+
+    ;; Case 7: Empty initial messages
+    (let ((data '(:input [])))
+      (gptel--inject-prompt backend data new-msg)
+      (should (equal (plist-get data :input)
                      (vector new-msg)))))
 
   ;; Test Gemini implementation

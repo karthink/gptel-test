@@ -246,6 +246,65 @@ output.  It should contain a list of three items:
   "examples-responses/openai/thinking_stream_deepseek_01.eld"
   800)
 
+;;;; OpenAI-responses API
+;;;;; non-streaming
+(gptel-test-response-parsing "openai-responses-nostream-01" 'openai-responses
+  "examples-responses/openai-responses/thinking_nostream_gpt5.2_01.txt"
+  "examples-responses/openai-responses/thinking_nostream_gpt5.2_01.eld")
+
+(gptel-test-response-parsing "openai-responses-nostream-02" 'openai-responses
+  "examples-responses/openai-responses/nostream_gpt5.2_01.txt"
+  "examples-responses/openai-responses/nostream_gpt5.2_01.eld")
+
+(gptel-test-response-parsing "openai-responses-nostream-03" 'openai-responses
+  "examples-responses/openai-responses/thinking_nostream_oss120_01.txt"
+  "examples-responses/openai-responses/thinking_nostream_oss120_01.eld")
+
+(gptel-test-response-parsing "openai-responses-nostream-04" 'openai-responses
+  "examples-responses/openai-responses/thinking_nostream_gemini3_01.txt"
+  "examples-responses/openai-responses/thinking_nostream_gemini3_01.eld")
+
+;;;;; streaming
+(gptel-test-stream-parsing "openai-responses-01a" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_gpt5.2_01.txt"
+  "examples-responses/openai-responses/thinking_stream_gpt5.2_01.eld"
+  800)
+
+(gptel-test-stream-parsing "openai-responses-01b" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_gpt5.2_01.txt"
+  "examples-responses/openai-responses/thinking_stream_gpt5.2_01.eld"
+  400)
+
+(gptel-test-stream-parsing "openai-responses-02a" 'openai-responses
+  "examples-responses/openai-responses/stream_gpt5.2_02.txt"
+  "examples-responses/openai-responses/stream_gpt5.2_02.eld"
+  800)
+
+(gptel-test-stream-parsing "openai-responses-02b" 'openai-responses
+  "examples-responses/openai-responses/stream_gpt5.2_02.txt"
+  "examples-responses/openai-responses/stream_gpt5.2_02.eld"
+  400)
+
+(gptel-test-stream-parsing "openai-responses-03a" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_oss120_01.txt"
+  "examples-responses/openai-responses/thinking_stream_oss120_01.eld"
+  800)
+
+(gptel-test-stream-parsing "openai-responses-03b" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_oss120_01.txt"
+  "examples-responses/openai-responses/thinking_stream_oss120_01.eld"
+  400)
+
+(gptel-test-stream-parsing "openai-responses-04a" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_gemini3_01.txt"
+  "examples-responses/openai-responses/thinking_stream_gemini3_01.eld"
+  800)
+
+(gptel-test-stream-parsing "openai-responses-04b" 'openai-responses
+  "examples-responses/openai-responses/thinking_stream_gemini3_01.txt"
+  "examples-responses/openai-responses/thinking_stream_gemini3_01.eld"
+  400)
+
 ;; ;; TODO: This test file is too large, generate a smaller one
 ;; (gptel-test-stream-parsing "deepseek-01b" 'deepseek
 ;;   "examples-responses/openai/thinking_stream_deepseek_02.txt"

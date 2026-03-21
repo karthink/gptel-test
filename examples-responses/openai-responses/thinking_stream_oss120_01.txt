@@ -1,0 +1,153 @@
+event: response.created
+data: {"type":"response.created","sequence_number":0,"response":{"id":"gen_01KMC3TZN5VJJ439GKNMN2BEF3","object":"response","created_at":1774228176,"status":"in_progress","completed_at":null,"incomplete_details":null,"error":null,"output":[],"usage":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens_details":{"reasoning_tokens":0}},"model":"openai/gpt-oss-120b","instructions":"You are a helpful assistant. Respond concisely.","previous_response_id":null,"temperature":0.3,"top_p":1,"max_output_tokens":null,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"tools":[],"tool_choice":"auto","parallel_tool_calls":true,"max_tool_calls":null,"text":{"format":{"type":"text"}},"truncation":"disabled","reasoning":{"effort":"medium"},"store":false,"background":false,"service_tier":"auto","metadata":{},"safety_identifier":null,"prompt_cache_key":null,"prompt_cache_retention":null}}
+
+event: response.in_progress
+data: {"type":"response.in_progress","sequence_number":1,"response":{"id":"gen_01KMC3TZN5VJJ439GKNMN2BEF3","object":"response","created_at":1774228176,"status":"in_progress","completed_at":null,"incomplete_details":null,"error":null,"output":[],"usage":{"input_tokens":0,"output_tokens":0,"total_tokens":0,"input_tokens_details":{"cached_tokens":0},"output_tokens_details":{"reasoning_tokens":0}},"model":"openai/gpt-oss-120b","instructions":"You are a helpful assistant. Respond concisely.","previous_response_id":null,"temperature":0.3,"top_p":1,"max_output_tokens":null,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"tools":[],"tool_choice":"auto","parallel_tool_calls":true,"max_tool_calls":null,"text":{"format":{"type":"text"}},"truncation":"disabled","reasoning":{"effort":"medium"},"store":false,"background":false,"service_tier":"auto","metadata":{},"safety_identifier":null,"prompt_cache_key":null,"prompt_cache_retention":null}}
+
+event: response.output_item.added
+data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"type":"reasoning","id":"rs_1774228176870_ueo92nzjaqp","summary":[]}}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":3,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"We"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":4,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" need"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":5,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" to"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":6,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" respond"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":7,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" conc"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":8,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"is"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":9,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"ely"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":10,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"."}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":11,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" Probably"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":12,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":":"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":13,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" \""}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":14,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"I"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":15,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" am"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":16,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" Chat"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":17,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"GPT"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":18,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":","}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":19,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" a"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":20,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" large"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":21,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" language"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":22,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" model"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":23,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"...\""}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":24,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":" Conc"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":25,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"ise"}
+
+event: response.reasoning.delta
+data: {"type":"response.reasoning.delta","sequence_number":26,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"delta":"."}
+
+event: response.reasoning.done
+data: {"type":"response.reasoning.done","sequence_number":27,"item_id":"rs_1774228176870_ueo92nzjaqp","output_index":0,"content_index":0,"text":"We need to respond concisely. Probably: \"I am ChatGPT, a large language model...\" Concise."}
+
+event: response.output_item.done
+data: {"type":"response.output_item.done","sequence_number":28,"output_index":0,"item":{"type":"reasoning","id":"rs_1774228176870_ueo92nzjaqp","summary":[],"content":[{"type":"reasoning_text","text":"We need to respond concisely. Probably: \"I am ChatGPT, a large language model...\" Concise."}]}}
+
+event: response.output_item.added
+data: {"type":"response.output_item.added","sequence_number":29,"output_index":1,"item":{"type":"message","id":"msg_1774228176934_0ajnterccwtn","status":"in_progress","role":"assistant","content":[{"type":"output_text","text":"","annotations":[],"logprobs":[]}],"phase":null}}
+
+event: response.content_part.added
+data: {"type":"response.content_part.added","sequence_number":30,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"part":{"type":"output_text","text":"","annotations":[],"logprobs":[]}}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":31,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":"I","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":32,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":"’m","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":33,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" Chat","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":34,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":"GPT","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":35,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":",","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":36,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" an","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":37,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" AI","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":38,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" language","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":39,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" model","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":40,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" here","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":41,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" to","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":42,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" help","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":43,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" with","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":44,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" your","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":45,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":" questions","logprobs":[]}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","sequence_number":46,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"delta":".","logprobs":[]}
+
+event: response.output_text.done
+data: {"type":"response.output_text.done","sequence_number":47,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"text":"I’m ChatGPT, an AI language model here to help with your questions.","logprobs":[]}
+
+event: response.content_part.done
+data: {"type":"response.content_part.done","sequence_number":48,"item_id":"msg_1774228176934_0ajnterccwtn","output_index":1,"content_index":0,"part":{"type":"output_text","text":"I’m ChatGPT, an AI language model here to help with your questions.","annotations":[],"logprobs":[]}}
+
+event: response.output_item.done
+data: {"type":"response.output_item.done","sequence_number":49,"output_index":1,"item":{"type":"message","id":"msg_1774228176934_0ajnterccwtn","status":"completed","role":"assistant","content":[{"type":"output_text","text":"I’m ChatGPT, an AI language model here to help with your questions.","annotations":[],"logprobs":[]}],"phase":null}}
+
+event: response.completed
+data: {"type":"response.completed","sequence_number":50,"response":{"id":"gen_01KMC3TZN5VJJ439GKNMN2BEF3","object":"response","created_at":1774228176,"status":"completed","completed_at":1774228176,"incomplete_details":null,"error":null,"output":[{"type":"reasoning","id":"rs_1774228176870_ueo92nzjaqp","summary":[],"content":[{"type":"reasoning_text","text":"We need to respond concisely. Probably: \"I am ChatGPT, a large language model...\" Concise."}]},{"type":"message","id":"msg_1774228176934_0ajnterccwtn","status":"completed","role":"assistant","content":[{"type":"output_text","text":"I’m ChatGPT, an AI language model here to help with your questions.","annotations":[],"logprobs":[]}],"phase":null}],"usage":{"input_tokens":91,"output_tokens":50,"total_tokens":141,"input_tokens_details":{"cached_tokens":0},"output_tokens_details":{"reasoning_tokens":25}},"model":"openai/gpt-oss-120b","instructions":"You are a helpful assistant. Respond concisely.","previous_response_id":null,"temperature":0.3,"top_p":1,"max_output_tokens":null,"presence_penalty":0,"frequency_penalty":0,"top_logprobs":0,"tools":[],"tool_choice":"auto","parallel_tool_calls":true,"max_tool_calls":null,"text":{"format":{"type":"text"}},"truncation":"disabled","reasoning":{"effort":"medium"},"store":false,"background":false,"service_tier":"auto","metadata":{},"safety_identifier":null,"prompt_cache_key":null,"prompt_cache_retention":null,"provider_metadata":{"gateway":{"routing":{"originalModelId":"openai/gpt-oss-120b","resolvedProvider":"cerebras","resolvedProviderApiModelId":"gpt-oss-120b","internalResolvedModelId":"cerebras:gpt-oss-120b","fallbacksAvailable":["bedrock","groq","baseten","fireworks","crusoe","nebius","parasail"],"internalReasoning":"Selected cerebras as preferred provider for gpt-oss-120b. 7 fallback(s) available: bedrock, groq, baseten, fireworks, crusoe, nebius, parasail","planningReasoning":"BYOK credentials available for: cerebras, groq. System credentials planned for: cerebras, bedrock, groq, baseten, fireworks, crusoe, nebius, parasail. Total execution order: cerebras(BYOK) → groq(BYOK) → cerebras(system) → bedrock(system) → groq(system) → baseten(system) → fireworks(system) → crusoe(system) → nebius(system) → parasail(system)","canonicalSlug":"openai/gpt-oss-120b","finalProvider":"groq","attempts":[{"provider":"cerebras","internalModelId":"cerebras:gpt-oss-120b","providerApiModelId":"gpt-oss-120b","credentialType":"byok","success":false,"error":"Model gpt-oss-120b does not exist or you do not have access to it.","startTime":807594.987737,"endTime":807671.468523,"statusCode":404},{"provider":"groq","internalModelId":"groq:openai/gpt-oss-120b","providerApiModelId":"openai/gpt-oss-120b","credentialType":"byok","success":true,"startTime":807687.153804,"endTime":807833.164178,"statusCode":200,"providerResponseId":"chatcmpl-ee93952a-d88b-4458-beed-340fa882a31e"}],"modelAttemptCount":1,"modelAttempts":[{"modelId":"cerebras:gpt-oss-120b","canonicalSlug":"openai/gpt-oss-120b","success":true,"providerAttemptCount":2,"providerAttempts":[{"provider":"cerebras","internalModelId":"cerebras:gpt-oss-120b","providerApiModelId":"gpt-oss-120b","credentialType":"byok","success":false,"error":"Model gpt-oss-120b does not exist or you do not have access to it.","startTime":807594.987737,"endTime":807671.468523,"statusCode":404},{"provider":"groq","internalModelId":"groq:openai/gpt-oss-120b","providerApiModelId":"openai/gpt-oss-120b","credentialType":"byok","success":true,"startTime":807687.153804,"endTime":807833.164178,"statusCode":200,"providerResponseId":"chatcmpl-ee93952a-d88b-4458-beed-340fa882a31e"}]}],"totalProviderAttemptCount":2},"cost":"0","marketCost":"0.00004365","generationId":"gen_01KMC3TZN5VJJ439GKNMN2BEF3","billableWebSearchCalls":0}}}}
+

@@ -1,0 +1,2 @@
+(nil ""
+     "The two main bridges connecting the East Bay and San Francisco (West Bay) are:\n\n- **San Francisco–Oakland Bay Bridge** (I‑80): connects **San Francisco ↔ Oakland/Yerba Buena Island**.\n- **Golden Gate Bridge** (US‑101/CA‑1): connects **San Francisco ↔ Marin County** (North Bay, often grouped with “west/north side” of the Bay area).\n\nIf you mean strictly **San Francisco ↔ East Bay**, it’s the **Bay Bridge**.")

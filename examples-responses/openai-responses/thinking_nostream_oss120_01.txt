@@ -1,0 +1,159 @@
+{
+  "id": "gen_01KMJFBAGBYVMJMY3GCS2G6QHE",
+  "object": "response",
+  "created_at": 1774441573,
+  "status": "completed",
+  "completed_at": 1774441573,
+  "incomplete_details": null,
+  "error": null,
+  "output": [
+    {
+      "type": "reasoning",
+      "id": "rs_1774441573419_1acjpnr6emn",
+      "summary": [],
+      "content": [
+        {
+          "type": "reasoning_text",
+          "text": "The user says \"hello\". The developer instruction says: \"Pure logic. Zero fluff. Attack assumptions. No summaries. High-density brevity.\" So we need to respond with pure logic, no fluff, attack assumptions, no summaries, high-density brevity. The user just says hello. We need to respond logically, perhaps questioning the greeting? Attack assumptions: maybe assume they want conversation? We can respond with a logical statement: \"Greeting detected. Intent unclear. How may I assist?\" That's brief, logical, no fluff. Should we attack assumptions? The assumption is that they want chat. We can note that. Provide a concise response."
+        }
+      ]
+    },
+    {
+      "type": "message",
+      "id": "msg_1774441573419_3mqe90jhr55",
+      "status": "completed",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "Greeting detected. Intent unspecified. Clarify request.",
+          "annotations": [],
+          "logprobs": []
+        }
+      ],
+      "phase": null
+    }
+  ],
+  "usage": {
+    "input_tokens": 92,
+    "output_tokens": 149,
+    "total_tokens": 241,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens_details": {
+      "reasoning_tokens": 130
+    }
+  },
+  "model": "gpt-oss-120b",
+  "instructions": "Pure logic. Zero fluff. Attack assumptions. No summaries. High-density brevity.",
+  "previous_response_id": null,
+  "temperature": 0.3,
+  "top_p": 1,
+  "max_output_tokens": null,
+  "presence_penalty": 0,
+  "frequency_penalty": 0,
+  "top_logprobs": 0,
+  "tools": [],
+  "tool_choice": "auto",
+  "parallel_tool_calls": true,
+  "max_tool_calls": null,
+  "text": {
+    "format": {
+      "type": "text"
+    }
+  },
+  "truncation": "disabled",
+  "reasoning": {
+    "effort": "medium"
+  },
+  "store": false,
+  "background": false,
+  "service_tier": "auto",
+  "metadata": {},
+  "safety_identifier": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": null,
+  "provider_metadata": {
+    "gateway": {
+      "routing": {
+        "originalModelId": "openai/gpt-oss-120b",
+        "resolvedProvider": "cerebras",
+        "resolvedProviderApiModelId": "gpt-oss-120b",
+        "internalResolvedModelId": "cerebras:gpt-oss-120b",
+        "fallbacksAvailable": [
+          "bedrock",
+          "groq",
+          "baseten",
+          "fireworks",
+          "crusoe",
+          "nebius",
+          "parasail"
+        ],
+        "internalReasoning": "Selected cerebras as preferred provider for gpt-oss-120b. 7 fallback(s) available: bedrock, groq, baseten, fireworks, crusoe, nebius, parasail",
+        "planningReasoning": "BYOK credentials available for: cerebras, groq. System credentials planned for: cerebras, bedrock, groq, baseten, fireworks, crusoe, nebius, parasail. Total execution order: cerebras(BYOK) → groq(BYOK) → cerebras(system) → bedrock(system) → groq(system) → baseten(system) → fireworks(system) → crusoe(system) → nebius(system) → parasail(system)",
+        "canonicalSlug": "openai/gpt-oss-120b",
+        "finalProvider": "groq",
+        "attempts": [
+          {
+            "provider": "cerebras",
+            "internalModelId": "cerebras:gpt-oss-120b",
+            "providerApiModelId": "gpt-oss-120b",
+            "credentialType": "byok",
+            "success": false,
+            "error": "Model gpt-oss-120b does not exist or you do not have access to it.",
+            "startTime": 1557806.051891,
+            "endTime": 1557888.286292,
+            "statusCode": 404
+          },
+          {
+            "provider": "groq",
+            "internalModelId": "groq:openai/gpt-oss-120b",
+            "providerApiModelId": "openai/gpt-oss-120b",
+            "credentialType": "byok",
+            "success": true,
+            "startTime": 1557904.338998,
+            "endTime": 1558330.519581,
+            "statusCode": 200
+          }
+        ],
+        "modelAttemptCount": 1,
+        "modelAttempts": [
+          {
+            "modelId": "cerebras:gpt-oss-120b",
+            "canonicalSlug": "openai/gpt-oss-120b",
+            "success": true,
+            "providerAttemptCount": 2,
+            "providerAttempts": [
+              {
+                "provider": "cerebras",
+                "internalModelId": "cerebras:gpt-oss-120b",
+                "providerApiModelId": "gpt-oss-120b",
+                "credentialType": "byok",
+                "success": false,
+                "error": "Model gpt-oss-120b does not exist or you do not have access to it.",
+                "startTime": 1557806.051891,
+                "endTime": 1557888.286292,
+                "statusCode": 404
+              },
+              {
+                "provider": "groq",
+                "internalModelId": "groq:openai/gpt-oss-120b",
+                "providerApiModelId": "openai/gpt-oss-120b",
+                "credentialType": "byok",
+                "success": true,
+                "startTime": 1557904.338998,
+                "endTime": 1558330.519581,
+                "statusCode": 200
+              }
+            ]
+          }
+        ],
+        "totalProviderAttemptCount": 2
+      },
+      "cost": "0",
+      "marketCost": "0.0001032",
+      "generationId": "gen_01KMJFBAGBYVMJMY3GCS2G6QHE"
+    }
+  }
+}
