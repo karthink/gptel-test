@@ -304,5 +304,117 @@ then some more text to end."))
     ;; Should be string-width + 5
     (should (= offset (+ 5 (string-width rhs))))))
 
+
+;;; Tests for presets
+
+(ert-deftest gptel-test-apply-preset-symbol ()
+  "Test `gptel--apply-preset' with a symbol."
+  (let ((gptel-backend nil)
+        (gptel-model nil)
+        (gptel--preset nil)
+        (test-backend (alist-get 'openai gptel-test-backends)))
+    (gptel-make-preset 'test-preset-symbol
+      :backend test-backend
+      :model 'test-model)
+    (gptel--apply-preset 'test-preset-symbol)
+    (should (eq gptel--preset 'test-preset-symbol))
+    (should (eq gptel-backend test-backend))
+    (should (eq gptel-model 'test-model))))
+
+(ert-deftest gptel-test-apply-preset-plist ()
+  "Test `gptel--apply-preset' with a plist."
+  (let ((gptel-backend nil)
+        (gptel-model nil)
+        (gptel--preset 'old-preset)
+        (test-backend (alist-get 'openai gptel-test-backends)))
+    (gptel--apply-preset `(:backend ,test-backend
+                           :model test-model-plist))
+    (should (eq gptel--preset 'old-preset)) ;; applying plist doesn't change gptel--preset
+    (should (eq gptel-backend test-backend))
+    (should (eq gptel-model 'test-model-plist))))
+
+(ert-deftest gptel-test-apply-preset-parents ()
+  "Test `gptel--apply-preset' with parents."
+  (let ((gptel-backend nil)
+        (gptel-model nil)
+        (gptel-temperature nil)
+        (gptel--preset nil)
+        (test-backend (alist-get 'openai gptel-test-backends)))
+    (gptel-make-preset 'test-parent-preset
+      :backend test-backend
+      :model 'test-parent-model
+      :temperature 1.0)
+    (gptel-make-preset 'test-child-preset
+      :parents '(test-parent-preset)
+      :model 'test-child-model)
+    (gptel--apply-preset 'test-child-preset)
+    (should (eq gptel--preset 'test-child-preset)) ;; not test-parent-preset
+    (should (eq gptel-backend test-backend))
+    (should (eq gptel-model 'test-child-model))
+    (should (equal gptel-temperature 1.0))))
+
+(ert-deftest gptel-test-apply-preset-anonymous-parents ()
+  "Test `gptel--apply-preset' with anonymous parents."
+  (let ((gptel-backend nil)
+        (gptel-model nil)
+        (gptel-temperature nil)
+        (gptel--preset nil)
+        (test-backend (alist-get 'openai gptel-test-backends)))
+    (gptel-make-preset 'test-child-preset-anon
+      :parents `((:backend ,test-backend
+                  :model test-anon-parent-model
+                  :temperature 1.0))
+      :model 'test-child-model-anon)
+    (gptel--apply-preset 'test-child-preset-anon)
+    (should (eq gptel--preset 'test-child-preset-anon))
+    (should (eq gptel-backend test-backend))
+    (should (eq gptel-model 'test-child-model-anon))
+    (should (equal gptel-temperature 1.0))))
+
+(ert-deftest gptel-test-with-preset ()
+  "Test `gptel-with-preset'."
+  (let ((gptel-backend (alist-get 'openai gptel-test-backends))
+        (gptel-model 'base-model)
+        (gptel--preset 'base-preset)
+        (preset-backend (alist-get 'anthropic gptel-test-backends)))
+    (gptel-make-preset 'test-with-preset
+      :backend preset-backend
+      :model 'preset-model)
+    (gptel-with-preset 'test-with-preset
+      (should (eq gptel-backend preset-backend))
+      (should (eq gptel-model 'preset-model))
+      (should (eq gptel--preset 'test-with-preset)))
+    ;; Check values are restored
+    (should (eq gptel-backend (alist-get 'openai gptel-test-backends)))
+    (should (eq gptel-model 'base-model))
+    (should (eq gptel--preset 'base-preset))))
+
+(ert-deftest gptel-test-save-preset ()
+  "Test `gptel--save-preset'."
+  ;; Prevent prompt from read-string/completing-read
+  (cl-letf (((symbol-function 'read-string) (lambda (&rest _) "Test save"))
+            ((symbol-function 'completing-read) (lambda (&rest _) "test-saved-preset")))
+    (let ((gptel-backend (alist-get 'openai gptel-test-backends))
+          (gptel-model 'save-model)
+          (gptel--system-message "save system")
+          (gptel-tools nil)
+          (gptel-stream nil)
+          (gptel-temperature 1.0)
+          (gptel-max-tokens 100)
+          (gptel-use-context nil)
+          (gptel-track-media nil)
+          (gptel-include-reasoning t)
+          (kill-ring nil))
+      (gptel--save-preset 'test-saved-preset "Test save")
+      ;; It should create the preset
+      (let ((preset-spec (gptel-get-preset 'test-saved-preset)))
+        (should preset-spec)
+        (should (equal (plist-get preset-spec :description) "Test save"))
+        (should (equal (plist-get preset-spec :model) 'save-model))
+        (should (equal (plist-get preset-spec :temperature) 1.0)))
+      ;; It should save Lisp expression to kill-ring
+      (should (> (length kill-ring) 0))
+      (should (string-match-p "gptel-make-preset 'test-saved-preset" (car kill-ring))))))
+
 (provide 'gptel-unit-tests)
 ;;; gptel-unit-tests.el ends here
