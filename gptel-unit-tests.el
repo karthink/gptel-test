@@ -44,20 +44,20 @@
 
 ;;; Tests for media parsing in buffers: `gptel--parse-media-links'
 (ert-deftest gptel-test-media-link-parsing-org-1 ()
-  (let ((mediatext "Some text here, just checking.")
-        (buftext "Some text followed by a link:
+  (let* ((mediatext "Some text here, just checking.")
+	 (medialinks-yaml-fn (make-temp-file "gptel-test-medialinks-" nil ".yaml" mediatext))
+	 (medialinks-txt-fn (make-temp-file "gptel-test-medialinks-" nil ".txt" mediatext))
+	 (buftext (concat "Some text followed by a link:
 
-[[file:/tmp/medialinks.txt]]
+[[file:" medialinks-txt-fn "]]
 
 then more text, then another link
 
-[[file:/tmp/medialinks.yaml]]
+[[file:" medialinks-yaml-fn "]]
 
-then some more text to end."))
+then some more text to end.")))
     (unwind-protect
         (progn
-          (with-temp-file "/tmp/medialinks.yaml" (insert mediatext))
-          (with-temp-file "/tmp/medialinks.txt" (insert mediatext))
           (let ((org-inhibit-startup t)
                 (gptel-backend (alist-get 'openai gptel-test-backends))
                 (gptel-model 'gpt-4o-mini)) ;any model will do (no media)
@@ -66,42 +66,41 @@ then some more text to end."))
               (delay-mode-hooks (org-mode))
               (should (equal (gptel--parse-media-links
                               major-mode (point-min) (point-max))
-                             '((:text "Some text followed by a link:\n\n")
-                               (:textfile "/tmp/medialinks.txt")
+                             `((:text "Some text followed by a link:\n\n")
+                               (:textfile ,medialinks-txt-fn)
                                (:text "\n\nthen more text, then another link\n\n")
-                               (:textfile "/tmp/medialinks.yaml")
+                               (:textfile ,medialinks-yaml-fn)
                                (:text "\n\nthen some more text to end.")))))))
-      (delete-file "/tmp/medialinks.yaml")
-      (delete-file "/tmp/medialinks.txt"))))
+      (delete-file medialinks-yaml-fn)
+      (delete-file medialinks-txt-fn))))
 
 (ert-deftest gptel-test-media-link-parsing-org-2 ()
-  (let ((mediatext "Some text here, just checking.")
-        (buftext "Some text followed by a link:
+  (let* ((medialinks-txt-fn (make-temp-file "gptel-test-medialinks-" nil ".txt" "Some text here, just checking."))
+         (buftext (concat "Some text followed by a link:
 
-[[file:/tmp/medialinks.txt]]
+[[file:" medialinks-txt-fn "]]
 
 then more text, then an image
 
 [[file:./examples/hundred.png]]
 
-then some more text to end."))
+then some more text to end.")))
     (unwind-protect
-        (progn
-          (with-temp-file "/tmp/medialinks.txt" (insert mediatext))
+	(progn
           (let ((org-inhibit-startup t)
-                (gptel-backend (alist-get 'openai gptel-test-backends))
-                (gptel-model 'gpt-4o-mini)) ;media-capable model
+		(gptel-backend (alist-get 'openai gptel-test-backends))
+		(gptel-model 'gpt-4o-mini)) ;media-capable model
             (with-temp-buffer
               (insert buftext)
               (delay-mode-hooks (org-mode))
               (should (equal (gptel--parse-media-links
                               major-mode (point-min) (point-max))
-                             '((:text "Some text followed by a link:\n\n")
-                               (:textfile "/tmp/medialinks.txt")
+                             `((:text "Some text followed by a link:\n\n")
+                               (:textfile ,medialinks-txt-fn)
                                (:text "\n\nthen more text, then an image\n\n")
                                (:media "./examples/hundred.png" :mime "image/png")
                                (:text "\n\nthen some more text to end.")))))))
-      (delete-file "/tmp/medialinks.txt"))))
+      (delete-file medialinks-txt-fn))))
 
 ;;; Tests for parsing JSON schema supplied in various forms
 (ert-deftest gptel-test-dispatch-schema-type () 
@@ -185,19 +184,19 @@ then some more text to end."))
 (ert-deftest gptel-test-media-link-parsing-md-1 ()
   (skip-unless (fboundp 'markdown-mode))
   (let ((mediatext "Some text here, just checking.")
-        (buftext "Some text followed by a link:
+	(medialinks-yaml-fn (make-temp-file "gptel-test-medialinks-" nil ".yaml" mediatext))
+	(medialinks-txt-fn (make-temp-file "gptel-test-medialinks-" nil ".txt" mediatext))
+        (buftext (concat "Some text followed by a link:
 
-[medialinks](/tmp/medialinks.txt)
+[medialinks](" medialinks-txt-fn ")
 
 then more text, then another link
 
-[some text](/tmp/medialinks.yaml)
+[some text](" medialinks-yaml-fn ")
 
-then some more text to end."))
+then some more text to end.")))
     (unwind-protect
         (progn
-          (with-temp-file "/tmp/medialinks.yaml" (insert mediatext))
-          (with-temp-file "/tmp/medialinks.txt" (insert mediatext))
           (let ((gptel-backend (alist-get 'openai gptel-test-backends))
                 (gptel-model 'gpt-4o-mini)) ;any model will do (no media)
             (with-temp-buffer
@@ -205,29 +204,28 @@ then some more text to end."))
               (delay-mode-hooks (markdown-mode))
               (should (equal (gptel--parse-media-links
                               major-mode (point-min) (point-max))
-                             '((:text "Some text followed by a link:\n\n")
-                               (:textfile "/tmp/medialinks.txt")
+                             `((:text "Some text followed by a link:\n\n")
+                               (:textfile ,medialinks-txt-fn)
                                (:text "\n\nthen more text, then another link\n\n")
-                               (:textfile "/tmp/medialinks.yaml")
+                               (:textfile ,medialinks-yaml-fn)
                                (:text "\n\nthen some more text to end.")))))))
-      (delete-file "/tmp/medialinks.yaml")
-      (delete-file "/tmp/medialinks.txt"))))
+      (delete-file medialinks-yaml-fn)
+      (delete-file medialinks-txt-fn))))
 
 (ert-deftest gptel-test-media-link-parsing-md-2 ()
   (skip-unless (fboundp 'markdown-mode))
-  (let ((mediatext "Some text here, just checking.")
-        (buftext "Some text followed by a link:
+  (let ((medialinks-txt-fn (make-temp-file "gptel-test-medialinks-" nil ".txt" "Some text here, just checking."))
+        (buftext (concat "Some text followed by a link:
 
-[medialinks](/tmp/medialinks.txt)
+[medialinks](" medialinks-txt-fn ")
 
 then more text, then an image
 
 ![an image](./examples/hundred.png)
 
-then some more text to end."))
+then some more text to end.")))
     (unwind-protect
         (progn
-          (with-temp-file "/tmp/medialinks.txt" (insert mediatext))
           (let ((gptel-backend (alist-get 'openai gptel-test-backends))
                 (gptel-model 'gpt-4o-mini)) ;media-capable model
             (with-temp-buffer
@@ -235,12 +233,12 @@ then some more text to end."))
               (delay-mode-hooks (markdown-mode))
               (should (equal (gptel--parse-media-links
                               major-mode (point-min) (point-max))
-                             '((:text "Some text followed by a link:\n\n")
-                               (:textfile "/tmp/medialinks.txt")
+                             `((:text "Some text followed by a link:\n\n")
+                               (:textfile ,medialinks-txt-fn)
                                (:text "\n\nthen more text, then an image\n\n")
                                (:media "./examples/hundred.png" :mime "image/png")
                                (:text "\n\nthen some more text to end.")))))))
-      (delete-file "/tmp/medialinks.txt"))))
+      (delete-file medialinks-txt-fn))))
 
 ;;; Tests for merging and summing plists
 (ert-deftest gptel-test--merge-plists-1 ()
