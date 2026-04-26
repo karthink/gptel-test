@@ -298,12 +298,15 @@ We need to search the web. Use functions.WebSearch.")])))
          (fsm (gptel-make-fsm)))
     (setf (gptel-fsm-info fsm) info)
 
-    ;; Case 1: Modify arguments
+    ;; Case 1: Modify arguments and :confirm slot
     (let ((injected-args nil)
           (gptel-pre-tool-call-functions
            (list (lambda (args)
                    (when (equal (plist-get args :name) "tool1")
-                     (list :args '(:arg 100)))))))
+                     (list :args '(:arg 100) :confirm t)))
+                 (lambda (args)
+                   (when (equal (plist-get args :name) "tool2")
+                     (list :confirm nil))))))
       (cl-letf (((symbol-function 'gptel--inject-tool-call)
                  (lambda (_backend _data tool-call new-call)
                    (push (list (plist-get tool-call :name) (plist-get new-call :args))
@@ -313,6 +316,11 @@ We need to search the web. Use functions.WebSearch.")])))
         ;; (which is part of the info plist)
         (should (equal (plist-get (nth 0 (plist-get info :tool-use)) :args)
                        '(:arg 100)))
+        ;; Check that tool confirmation has been updated
+        (should (eq (plist-get (nth 0 (plist-get info :tool-use)) :confirm) t))
+        (let ((tool-call-2-head (plist-member (nth 1 (plist-get info :tool-use)) :confirm)))
+          (should (and (eq (car tool-call-2-head) :confirm)
+                       (null (cadr tool-call-2-head)))))
         ;; Check that inject-tool-args was called
         (should (equal injected-args '(("tool1" (:arg 100)))))))
 
