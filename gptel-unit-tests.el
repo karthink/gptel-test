@@ -242,6 +242,42 @@ then some more text to end."))
                                (:text "\n\nthen some more text to end.")))))))
       (delete-file "/tmp/medialinks.txt"))))
 
+;;; Tests for merging and summing plists
+(ert-deftest gptel-test--merge-plists-1 ()
+  "`gptel--merge-plists' should handle nil plist arguments."
+  (should (equal (gptel--merge-plists nil nil) nil))
+  (should (equal (gptel--merge-plists nil '(:a 1)) '(:a 1)))
+  (should (equal (gptel--merge-plists '(:a 1) nil) '(:a 1))))
+
+(ert-deftest gptel-test--merge-plists-2 ()
+  "`gptel--merge-plists' should merge differing keys into the first plist."
+  (let* ((first (list :a 1 :b 2))
+         (second (list :b 3 :c 4))
+         (result (gptel--merge-plists first second)))
+    (should (eq result first))
+    (should (equal result '(:a 1 :b 3 :c 4)))
+    (should (equal first '(:a 1 :b 3 :c 4)))
+    (should (equal second '(:b 3 :c 4))))
+  (let* ((first (list :input 10))
+         (result (gptel--merge-plists first '(:output 20 :cached 30))))
+    (should (eq result first))
+    (should (equal result '(:input 10 :output 20 :cached 30)))))
+
+(ert-deftest gptel-test--sum-plists ()
+  "`gptel--sum-plists' should handle nil plist arguments and return a fresh plist."
+  (let* ((first (list :a 1 :b 2))
+         (second (list :b 3 :c 4))
+         (result (gptel--sum-plists nil first nil second)))
+    (should (equal result '(:a 1 :b 5 :c 4)))
+    (should-not (eq result first))
+    (should-not (eq result second)))
+  (let* ((first (list :input 10 :output 5 :cached 4))
+         (second (list :cached 8 :input 10 :output 30 :cache 45))
+         (result (gptel--sum-plists first second)))
+    (should (equal result '(:input 20 :output 35 :cached 12 :cache 45)))
+    (should-not (eq result first))
+    (should-not (eq result second))))
+
 ;;; Test for declarative list modification DSL
 (ert-deftest gptel-test--modify-value ()
   "Test `gptel--modify-value'."
