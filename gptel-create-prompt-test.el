@@ -205,6 +205,7 @@ preselected for now, see below.)"
 ;;;; OpenAI
 (gptel-test-prompt-creation
     "openai-branching-org" "examples/openai-prompt-branching-org.eld"
+  (skip-unless (not (version<= org-version "9.7")))
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" openai nil
    (let ((gptel-org-branching-context t)
@@ -215,6 +216,7 @@ preselected for now, see below.)"
 ;;;; Anthropic
 (gptel-test-prompt-creation
     "anthropic-branching-org" "examples/anthropic-prompt-branching-org.eld"
+  (skip-unless (not (version<= org-version "9.7")))
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" anthropic nil
    (let ((gptel-org-branching-context t)
@@ -225,6 +227,7 @@ preselected for now, see below.)"
 ;;;; Gemini
 (gptel-test-prompt-creation
     "gemini-branching-org" "examples/gemini-prompt-branching-org.eld"
+  (skip-unless (not (version<= org-version "9.7")))
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" gemini nil
    (let ((gptel-org-branching-context t)
@@ -235,6 +238,7 @@ preselected for now, see below.)"
 ;;;; Ollama
 (gptel-test-prompt-creation
     "ollama-branching-org" "examples/ollama-prompt-branching-org.eld"
+  (skip-unless (not (version<= org-version "9.7")))
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" ollama nil
    (let ((gptel-org-branching-context t)
@@ -256,19 +260,20 @@ the top of the buffer.
 This case requires special logic because of the behavior of
 `org-element-lineage', see `gptel-org--create-prompt' for
 details."
-    (let ((gptel-track-response t)
-          (gptel-org-branching-context t)
-          (gptel--num-messages-to-send nil)
-          (gptel-context nil)
-          (gptel-backend (alist-get 'openai gptel-test-backends))
-          (gptel--system-message gptel-test-system-message)
-          (gptel-org-ignore-elements nil)
-          (gptel-prompt-filter-hook nil)
-          (inhibit-message t)
-          (org-inhibit-startup t))
-      (pcase-dolist (`(,text ,result)
-                     ;; Case 1: Heading at (point-min) should be excluded
-                     '(("*** This is heading 1
+  (skip-unless (not (version<= org-version "9.7")))
+  (let ((gptel-track-response t)
+        (gptel-org-branching-context t)
+        (gptel--num-messages-to-send nil)
+        (gptel-context nil)
+        (gptel-backend (alist-get 'openai gptel-test-backends))
+        (gptel--system-message gptel-test-system-message)
+        (gptel-org-ignore-elements nil)
+        (gptel-prompt-filter-hook nil)
+        (inhibit-message t)
+        (org-inhibit-startup t))
+    (pcase-dolist (`(,text ,result)
+                   ;; Case 1: Heading at (point-min) should be excluded
+                   '(("*** This is heading 1
 
 Irrelevant text
 
@@ -422,6 +427,7 @@ Some details")))))
      (gptel--create-prompt))))
 
 (gptel-test-prompt-creation "openai-region-branching-org" "examples/openai-prompt-region-branching-org.eld"
+  (skip-unless (not (version<= org-version "9.7")))
   (with-gptel-chat-file
    "examples/prompt-creation-branching.org" openai nil
    (let ((gptel-org-branching-context t)
