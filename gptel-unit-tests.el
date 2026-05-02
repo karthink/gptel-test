@@ -42,6 +42,46 @@
                             (gptel-response-prefix-string)
                             " \n\t"))))))
 
+;;; Tests for inserting prompt lists into the buffer
+(ert-deftest gptel-test-parse-list-and-insert ()
+  "Test `gptel--parse-list-and-insert' with various formats."
+  (let ((gptel-response-separator "\n\n"))
+    ;; 1. Simple format
+    (with-temp-buffer
+      (gptel--parse-list-and-insert '("Prompt 1" "Response 1" "Prompt 2"))
+      (should (equal (buffer-string)
+                     (concat "Prompt 1"
+                             "\n\n" (propertize "Response 1" 'gptel 'response) "\n\n"
+                             "Prompt 2"))))
+    ;; 2. Advanced format: prompt and response
+    (with-temp-buffer
+      (gptel--parse-list-and-insert
+       '((prompt . "Prompt A")
+         (response . "Response A")
+         (prompt . "Prompt B")))
+      (should (equal (buffer-string)
+                     (concat "Prompt A"
+                             "\n\n" (propertize "Response A" 'gptel 'response)
+                             "Prompt B"))))
+    ;; 3. Advanced format: tool call
+    (with-temp-buffer
+      (gptel--parse-list-and-insert
+       '((tool . (:name "my_tool" :args (:x 1) :id "call_1" :result "success"))))
+      (let ((expected-content
+             (concat "\n\n"
+                     (propertize "(:name \"my_tool\" :args (:x 1))\n\nsuccess"
+                                 'gptel '(tool . "call_1")))))
+        (should (equal (buffer-string) expected-content))))
+    ;; 4. Advanced format: tool call with symbol name
+    (with-temp-buffer
+      (gptel--parse-list-and-insert
+       '((tool . (:name my_tool :args (:x 1) :id "call_2" :result "success"))))
+      (let ((expected-content
+             (concat "\n\n"
+                     (propertize "(:name my_tool :args (:x 1))\n\nsuccess"
+                                 'gptel '(tool . "call_2")))))
+        (should (equal (buffer-string) expected-content))))))
+
 ;;; Tests for media parsing in buffers: `gptel--parse-media-links'
 (ert-deftest gptel-test-media-link-parsing-org-1 ()
   (let ((mediatext "Some text here, just checking.")
