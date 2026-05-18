@@ -524,3 +524,13 @@ Some details")))))
          (gptel-org-ignore-elements nil)
          (gptel-prompt-filter-hook nil))
      (gptel--create-prompt (point-max)))))
+
+;;;; Bedrock
+(gptel-test-prompt-creation
+    "bedrock-tool-block-org" "examples/bedrock-prompt-tool-block-org.eld"
+  (with-gptel-chat-file
+   "examples/prompt-creation-tool-block.org" bedrock nil
+   (let ((gptel-org-branching-context nil)
+         (gptel-org-ignore-elements nil)
+         (gptel-prompt-filter-hook nil))
+     (gptel--create-prompt (point-max)))))
