@@ -548,15 +548,15 @@ This is a test helper that uses the production function
          (buf (gptel-context-test--make-buffer content))
          (gptel-context (list buf))
          (gptel-use-context 'system)
-         (gptel--system-message "Original system message"))
+         (gptel-system-prompt "Original system message"))
     (unwind-protect
         (with-temp-buffer
           ;; Call the actual integration function
           (let ((context-string (gptel-context--string (gptel-context--collect))))
             (gptel-context--wrap-in-buffer context-string 'system)
             ;; Verify the system message now contains context  
-            (should (string-match-p "Context content" gptel--system-message))
-            (should (string-match-p "Original system message" gptel--system-message))))
+            (should (string-match-p "Context content" gptel-system-prompt))
+            (should (string-match-p "Original system message" gptel-system-prompt))))
       (kill-buffer buf))))
 
 (ert-deftest gptel-context-test-integration-user-injection ()
@@ -583,7 +583,7 @@ This is a test helper that uses the production function
   (let* ((content "Line 1\nLine 2\nLine 3\n")
          (buf (gptel-context-test--make-buffer content))
          (gptel-use-context 'system)
-         (gptel--system-message "System"))
+         (gptel-system-prompt "System"))
     (unwind-protect
         (with-current-buffer buf
           (let* ((start (progn (goto-char (point-min))
@@ -595,16 +595,16 @@ This is a test helper that uses the production function
               (let ((context-string (gptel-context--string (gptel-context--collect))))
                 (gptel-context--wrap-in-buffer context-string 'system)
                 ;; Should contain Line 2 but not Line 1 or 3
-                (should (string-match-p "Line 2" gptel--system-message))
-                (should-not (string-match-p "Line 1" gptel--system-message))
-                (should-not (string-match-p "Line 3" gptel--system-message))))))
+                (should (string-match-p "Line 2" gptel-system-prompt))
+                (should-not (string-match-p "Line 1" gptel-system-prompt))
+                (should-not (string-match-p "Line 3" gptel-system-prompt))))))
       (kill-buffer buf))))
 
 (ert-deftest gptel-context-test-integration-with-lines ()
   "Test that file context with :lines is properly injected."
   (let ((test-file (make-temp-file "gptel-context-test"))
         (gptel-use-context 'system)
-        (gptel--system-message "System"))
+        (gptel-system-prompt "System"))
     (unwind-protect
         (progn
           (with-temp-file test-file
@@ -614,11 +614,11 @@ This is a test helper that uses the production function
               (let ((context-string (gptel-context--string (gptel-context--collect))))
                 (gptel-context--wrap-in-buffer context-string 'system)
                 ;; Should contain lines 2-3
-                (should (string-match-p "File Line 2" gptel--system-message))
-                (should (string-match-p "File Line 3" gptel--system-message))
+                (should (string-match-p "File Line 2" gptel-system-prompt))
+                (should (string-match-p "File Line 3" gptel-system-prompt))
                 ;; Should not contain lines 1 or 4
-                (should-not (string-match-p "File Line 1" gptel--system-message))
-                (should-not (string-match-p "File Line 4" gptel--system-message))))))
+                (should-not (string-match-p "File Line 1" gptel-system-prompt))
+                (should-not (string-match-p "File Line 4" gptel-system-prompt))))))
       (delete-file test-file))))
 
 (ert-deftest gptel-context-test-integration-multiple-sources ()
@@ -627,7 +627,7 @@ This is a test helper that uses the production function
          (buf2 (gptel-context-test--make-buffer "Buffer 2 content\n"))
          (test-file (make-temp-file "gptel-context-test"))
          (gptel-use-context 'system)
-         (gptel--system-message "System"))
+         (gptel-system-prompt "System"))
     (unwind-protect
         (progn
           (with-temp-file test-file
@@ -637,9 +637,9 @@ This is a test helper that uses the production function
               (let ((context-string (gptel-context--string (gptel-context--collect))))
                 (gptel-context--wrap-in-buffer context-string 'system)
                 ;; All three sources should be present
-                (should (string-match-p "Buffer 1 content" gptel--system-message))
-                (should (string-match-p "Buffer 2 content" gptel--system-message))
-                (should (string-match-p "File content" gptel--system-message))))))
+                (should (string-match-p "Buffer 1 content" gptel-system-prompt))
+                (should (string-match-p "Buffer 2 content" gptel-system-prompt))
+                (should (string-match-p "File content" gptel-system-prompt))))))
       (kill-buffer buf1)
       (kill-buffer buf2)
       (delete-file test-file))))

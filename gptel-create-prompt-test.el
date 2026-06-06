@@ -26,7 +26,7 @@
          (gptel--num-messages-to-send nil)
          (gptel-context nil)
          (gptel-cache nil)
-         (gptel--system-message gptel-test-system-message)
+         (gptel-system-prompt gptel-test-system-message)
          (inhibit-message t))
     (with-current-buffer buf
       (deactivate-mark)
@@ -83,7 +83,7 @@ preselected for now, see below.)"
            (org-mode . "*Response*:
 ")
            (text-mode . "")))
-        (gptel--system-message gptel-test-system-message)
+        (gptel-system-prompt gptel-test-system-message)
         (write-region-annotate-functions nil)
         (write-region-post-annotation-function nil)
         (gptel-org-branching-context branching-context))
@@ -261,7 +261,7 @@ details."
           (gptel--num-messages-to-send nil)
           (gptel-context nil)
           (gptel-backend (alist-get 'openai gptel-test-backends))
-          (gptel--system-message gptel-test-system-message)
+          (gptel-system-prompt gptel-test-system-message)
           (gptel-org-ignore-elements nil)
           (gptel-prompt-filter-hook nil)
           (inhibit-message t)
