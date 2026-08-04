@@ -17,6 +17,9 @@
 (defvar gptel-test-backends
   `((openai    . ,(gptel--make-openai
                    :name "OpenAI" :models '(gpt-4o-mini)))
+    (openai-stream    . ,(gptel--make-openai
+                          :name "OpenAI" :models '(gpt-4o-mini)
+                          :stream t))
     (openai-responses . ,(gptel--make-openai-responses
                           :name "OpenAI-responses" :models '(gpt-5.2)))
     (anthropic . ,(gptel--make-anthropic
