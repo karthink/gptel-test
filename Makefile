@@ -1,6 +1,5 @@
 .PHONY: test
 test:
 	emacs -Q -L .. -L . \
-	$$(find .. -mindepth 1 -maxdepth 1 \( -name '.*.el' -prune -o -name '*.el' -type f -printf ' -l %p' \)) \
-	$$(find .  -mindepth 1 -maxdepth 1 \( -name '.*.el' -prune -o -name '*.el' -type f -printf ' -l %p' \)) \
+        $$(find .. -mindepth 1 -maxdepth 2 -name "gptel-*.el" -exec echo "-l {} \\"  \;) \
 	-l ert --batch -f ert-run-tests-batch-and-exit
