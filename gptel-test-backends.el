@@ -11,6 +11,7 @@
 (require 'gptel-gemini)
 (require 'gptel-ollama)
 (require 'gptel-openai-extras)
+(require 'gptel-openai-oauth)
 (require 'gptel-bedrock)
 (require 'gptel-kagi)
 
@@ -22,6 +23,8 @@
                           :stream t))
     (openai-responses . ,(gptel--make-openai-responses
                           :name "OpenAI-responses" :models '(gpt-5.2)))
+    (openai-oauth . ,(gptel--make-openai-oauth
+                      :name "Codex" :models '(gpt-5.6-luna)))
     (anthropic . ,(gptel--make-anthropic
                    :name "Claude" :models '(claude-3-5-sonnet-20240620)))
     (gemini    . ,(gptel--make-gemini
