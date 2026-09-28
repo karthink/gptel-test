@@ -1,0 +1,8 @@
+event: response.created
+data: {"type":"response.created","response":{"id":"resp_002","object":"response","created_at":1789559098,"status":"in_progress","background":false,"completed_at":null,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"model":"gpt-5.6-luna","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":"cache-key-002","reasoning":{"effort":"medium","summary":null},"safety_identifier":"user-000","service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+event: response.output_item.done
+data: {"type":"response.output_item.done","item":{"id":"rs_002","type":"reasoning","content":[],"encrypted_content":"dummy","summary":[]},"output_index":0,"sequence_number":1}
+
+event: response.failed
+data: {"type":"response.failed","response":{"id":"resp_002","status":"failed","error":{"code":"server_error","message":"The model produced invalid output"},"incomplete_details":null,"output":null,"usage":null},"sequence_number":3}

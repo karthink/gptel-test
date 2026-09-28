@@ -231,5 +231,26 @@ Tests the (gptel-backend-stream gptel-backend) check in
     (should-not (plist-get info :stream))
     (should (eq (plist-get data :stream) :json-false))))
 
+(ert-deftest gptel-request-test-stream-always-on-for-openai-oauth ()
+  "The Codex endpoint rejects requests with \"stream\": false.
+The oauth backend must therefore send \"stream\": true on the wire
+even when gptel itself is not streaming, so the payload :stream is
+t while info :stream stays nil."
+  (let* ((backend (alist-get 'openai-oauth gptel-test-backends))
+         (fsm (let ((gptel-backend backend)
+                    (gptel-model 'gpt-5.6-luna)
+                    (gptel-track-response nil)
+                    (gptel-temperature nil)
+                    (gptel-max-tokens nil)
+                    (gptel-use-curl t)
+                    (gptel-stream nil))
+                (gptel-request "hello" :dry-run t)))
+         (info (gptel-fsm-info fsm))
+         (data (plist-get info :data)))
+    ;; gptel is still in non-streaming mode
+    (should-not (plist-get info :stream))
+    ;; but the payload must say true
+    (should (eq (plist-get data :stream) t))))
+
 (provide 'gptel-request-test)
 ;;; gptel-request-test.el ends here

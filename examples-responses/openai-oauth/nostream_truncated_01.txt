@@ -1,0 +1,14 @@
+event: response.created
+data: {"type":"response.created","response":{"id":"resp_004","object":"response","created_at":1789559098,"status":"in_progress","background":false,"completed_at":null,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"model":"gpt-5.6-luna","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":"cache-key-004","reasoning":{"effort":"medium","summary":null},"safety_identifier":"user-000","service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+event: response.output_item.added
+data: {"type":"response.output_item.added","item":{"id":"msg_007","type":"message","status":"in_progress","content":[],"phase":"final_answer","role":"assistant"},"output_index":0,"sequence_number":1}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","content_index":0,"delta":"Hello","item_id":"msg_007","logprobs":[],"output_index":0,"sequence_number":2}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","content_index":0,"delta":" from","item_id":"msg_007","logprobs":[],"output_index":0,"sequence_number":3}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","content_index":0,"delta":" Codex","item_id":"msg_007","logprobs":[],"output_index":0,"sequence_number":4}

@@ -1,0 +1,11 @@
+event: response.created
+data: {"type":"response.created","response":{"id":"resp_006","object":"response","created_at":1789559098,"status":"in_progress","background":false,"completed_at":null,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"model":"gpt-5.6-luna","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":"cache-key-006","reasoning":{"effort":"medium","summary":null},"safety_identifier":"user-000","service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_p":0.98,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","content_index":0,"delta":"Hel","item_id":"msg_008","logprobs":[],"output_index":0,"sequence_number":1}
+
+event: response.output_text.delta
+data: {"type":"response.output_text.delta","content_index":0,"delta":"lo","item_id":"msg_008","logprobs":[],"output_index":0,"sequence_number":2}
+
+event: error
+data: {"type":"error","code":"rate_limit_exceeded","message":"Rate limit reached for gpt-5.6-luna","param":null,"sequence_number":3}

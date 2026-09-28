@@ -1,0 +1,41 @@
+{
+  "id": "resp_005",
+  "object": "response",
+  "created_at": 1773531376,
+  "status": "failed",
+  "background": false,
+  "completed_at": null,
+  "error": {
+    "code": "server_error",
+    "message": "The server had an error processing your request"
+  },
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": null,
+  "model": "gpt-5.2-2025-12-11",
+  "output": [],
+  "parallel_tool_calls": true,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "reasoning": {
+    "effort": "none",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "store": false,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": null,
+  "user": null,
+  "metadata": {}
+}
